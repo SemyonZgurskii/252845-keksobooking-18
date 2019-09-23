@@ -5,7 +5,6 @@ var checkinTimes = ['12:00', '13:00', '14:00'];
 var checkoutTimes = ['12:00', '13:00', '14:00'];
 var featuresList = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var photosSrcs = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var roomsQuantity = Math.ceil(Math.random() * 5);
 var adQuantity = 8;
 var adList = [];
 var pinsContainer = document.querySelector('.map__pins');
@@ -19,6 +18,7 @@ var getRandomIndex = function (arr) {
 };
 
 for (var i = 0; i < adQuantity; i++) {
+  var roomsQuantity = Math.ceil(Math.random() * 5);
   featuresList.length = Math.ceil(Math.random() * featuresList.length);
   adList[i] = {};
   adList[i].author = {};
@@ -47,7 +47,7 @@ var pinTemplate = document.querySelector('#pin')
 var renderPin = function (pinData) {
   var pin = pinTemplate.cloneNode(true);
 
-  pin.style = 'left: ' + pinData.location.x + 'px; top: ' + pinData.location.y + 'px;';
+  pin.style = 'left: ' + (pinData.location.x - pin.offsetWidth / 2) + 'px; top: ' + (pinData.location.y - pin.offsetHeight) + 'px;';
   pin.querySelector('img').src = pinData.author.avatar;
   pin.querySelector('img').alt = pinData.offer.title;
 
@@ -57,7 +57,7 @@ var renderPin = function (pinData) {
 var fragment = document.createDocumentFragment();
 
 for (var j = 0; j < adList.length; j++) {
-  fragment.appendChild(renderPin(adList[i]));
+  fragment.appendChild(renderPin(adList[j]));
 }
 
 pinsContainer.appendChild(fragment);
