@@ -20,17 +20,19 @@ var getRandomIndex = function (arr) {
 for (var i = 0; i < adQuantity; i++) {
   var roomsQuantity = Math.ceil(Math.random() * 5);
   featuresList.length = Math.ceil(Math.random() * featuresList.length);
+  var locationX = Math.ceil(Math.random() * pinsContainerWidth);
+  var locationY = Math.ceil(130 + Math.random() * 500);
   adList.push({
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png'
     },
     location: {
-      x: Math.ceil(Math.random() * pinsContainerWidth),
-      y: Math.ceil(130 + Math.random() * 500)
+      x: locationX,
+      y: locationY
     },
     offer: {
       title: 'заголовок предложения',
-      adress: this.location.x + ', ' + this.location.y,
+      adress: locationX + ', ' + locationY,
       price: Math.ceil(Math.random() * 1000),
       type: getRandomIndex(types),
       rooms: roomsQuantity,
