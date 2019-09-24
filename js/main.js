@@ -20,24 +20,28 @@ var getRandomIndex = function (arr) {
 for (var i = 0; i < adQuantity; i++) {
   var roomsQuantity = Math.ceil(Math.random() * 5);
   featuresList.length = Math.ceil(Math.random() * featuresList.length);
-  adList[i] = {};
-  adList[i].author = {};
-  adList[i].offer = {};
-  adList[i].location = {};
-  adList[i].location.x = Math.ceil(Math.random() * pinsContainerWidth);
-  adList[i].location.y = Math.ceil(130 + Math.random() * 500);
-  adList[i].author.avatar = 'img/avatars/user0' + (i + 1) + '.png';
-  adList[i].offer.title = 'заголовок предложения';
-  adList[i].offer.adress = adList[i].location.x + ', ' + adList[i].location.y;
-  adList[i].offer.price = Math.ceil(Math.random() * 1000);
-  adList[i].offer.type = getRandomIndex(types);
-  adList[i].offer.rooms = roomsQuantity;
-  adList[i].offer.guests = roomsQuantity * 2;
-  adList[i].offer.checkin = getRandomIndex(checkinTimes);
-  adList[i].offer.checkout = getRandomIndex(checkoutTimes);
-  adList[i].offer.features = featuresList.length.toString();
-  adList[i].offer.description = 'Какое-то описание';
-  adList[i].offer.photos = getRandomIndex(photosSrcs).toString();
+  adList.push({
+    author: {
+      avatar: 'img/avatars/user0' + (i + 1) + '.png'
+    },
+    location: {
+      x: Math.ceil(Math.random() * pinsContainerWidth),
+      y: Math.ceil(130 + Math.random() * 500)
+    },
+    offer: {
+      title: 'заголовок предложения',
+      adress: this.location.x + ', ' + this.location.y,
+      price: Math.ceil(Math.random() * 1000),
+      type: getRandomIndex(types),
+      rooms: roomsQuantity,
+      guests: roomsQuantity * 2,
+      checkin: getRandomIndex(checkinTimes),
+      checkout: getRandomIndex(checkoutTimes),
+      features: featuresList.length.toString(),
+      description: 'Какое-то описание',
+      photos: getRandomIndex(photosSrcs).toString()
+    }
+  });
 }
 
 var pinTemplate = document.querySelector('#pin')
