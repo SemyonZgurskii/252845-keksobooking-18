@@ -11,7 +11,7 @@ var pinsContainer = document.querySelector('.map__pins');
 var pinsContainerWidth = pinsContainer.offsetWidth;
 var map = document.querySelector('.map');
 
-map.classList.remove('map--faded'); // Временно
+// map.classList.remove('map--faded'); // Временно
 
 var getRandomIndex = function (arr) {
   return arr[Math.ceil(Math.random() * (arr.length - 1))];
@@ -66,4 +66,29 @@ for (var j = 0; j < adList.length; j++) {
   fragment.appendChild(renderPin(adList[j]));
 }
 
-pinsContainer.appendChild(fragment);
+// pinsContainer.appendChild(fragment);
+
+// MODULE4-TASK2
+
+var pageFieldsets = document.querySelectorAll('fieldset');
+var mainPin = map.querySelector('.map__pin--main');
+
+for (var b = 0; b < pageFieldsets.length; b++) {
+  pageFieldsets[b].setAttribute('disabled','');
+}
+
+var activatePage = function () {
+  map.classList.remove('map--faded');
+  pinsContainer.appendChild(fragment);
+  for (var c = 0; c < pageFieldsets.length; c++) {
+    pageFieldsets[c].removeAttribute('disabled');
+  }
+};
+
+mainPin.addEventListener('mousedown', activatePage);
+
+mainPin.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    activatePage();
+  }
+});
