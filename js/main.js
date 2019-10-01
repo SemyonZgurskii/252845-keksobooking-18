@@ -43,7 +43,7 @@ for (var i = 0; i < adQuantity; i++) {
       guests: roomsQuantity * 2,
       checkin: getRandomIndex(checkinTimes),
       checkout: getRandomIndex(checkoutTimes),
-      features: getRandomLengthArr(featuresList),
+      features: featuresList.slice(getRandomIndex(featuresList)),
       description: 'Какое-то описание',
       photos: getRandomLengthArr(photosSrcs)
     }
@@ -93,7 +93,7 @@ var renderCardPopup = function (cardData) {
   var popupPhotosImg = popupPhotos.querySelector('.popup__photo');
   var popupAvatar = popup.querySelector('.popup__avatar');
   var popupFeatures = popup.querySelector('.popup__features');
-  var popupFeaturesLi = popupFeatures.querySelector('.popup__feature');
+  var popupFeaturesLi = popupFeatures.querySelectorAll('.popup__feature');
   // var popupFeaturesWifi = popup.querySelector('.popup__feature--wifi');
   // var popupFeaturesDishwasher = popup.querySelector('.popup__feature--dishwasher');
   // var popupFeaturesParking = popup.querySelector('.popup__feature--parking');
@@ -118,8 +118,9 @@ var renderCardPopup = function (cardData) {
   popupDescription.textContent = cardData.offer.description;
   popupAvatar.src = cardData.author.avatar;
 
-  // popupFeaturesLi.length = cardData.offer.features.length;
-  popupFeaturesLi.slice(3);
+  for (var c = popupFeaturesLi.length; c > cardData.features.length; c--) {
+    popupFeatures.removeChild(popupFeaturesLi[c]);
+  }
 
   if (cardData.offer.photos.length > 1) {
     for (var a = 1; a < cardData.offer.photos.length; a++) {
