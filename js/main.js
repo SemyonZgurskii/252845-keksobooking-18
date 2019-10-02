@@ -72,6 +72,20 @@ for (var j = 0; j < adList.length; j++) {
 
 var pageFieldsets = document.querySelectorAll('fieldset');
 var mainPin = map.querySelector('.map__pin--main');
+var mainPinX = parseInt(mainPin.style.left, 10);
+var mainPinY = parseInt(mainPin.style.top, 10);
+var addressInput = document.querySelector('#address');
+var activeMainPinX = mainPinX + mainPin.offsetWidth / 2;
+var activeMainPinY = mainPinY + mainPin.offsetHeight;
+
+var roomsSelect = document.querySelector('#housing-rooms');
+var guestsQuantitySelect = document.querySelector('#housing-guests');
+
+var calculatePinLocation = function (x, y) {
+  return Math.round(x) + ', ' + Math.round(y);
+};
+
+addressInput.value = calculatePinLocation(mainPinX, mainPinY);
 
 for (var b = 0; b < pageFieldsets.length; b++) {
   pageFieldsets[b].setAttribute('disabled','');
@@ -85,10 +99,19 @@ var activatePage = function () {
   }
 };
 
-mainPin.addEventListener('mousedown', activatePage);
+mainPin.addEventListener('mousedown', function () {
+  activatePage();
+  addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+});
 
 mainPin.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
     activatePage();
+    addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
   }
 });
+
+if (roomsSelect.options.value === 1) {
+  console.log('6546l');
+  // guestsQuantitySelect.querySelectorAll('option:not([value="1"])').value.disabled = 'true';
+}
