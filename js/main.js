@@ -13,13 +13,17 @@ var map = document.querySelector('.map');
 
 map.classList.remove('map--faded'); // Временно
 
-var getRandomIndex = function (arr) {
+function getRandomIndex (arr) {
   return arr[Math.ceil(Math.random() * (arr.length - 1))];
-};
+}
+
+function getRandomLengthArr (arr) {
+  var arrCopy = arr.slice(Math.round(Math.random() * (arr.length - 1)));
+  return arrCopy;
+}
 
 for (var i = 0; i < adQuantity; i++) {
   var roomsQuantity = Math.ceil(Math.random() * 5);
-  featuresList.length = Math.ceil(Math.random() * featuresList.length);
   var locationX = Math.ceil(Math.random() * pinsContainerWidth);
   var locationY = Math.ceil(130 + Math.random() * 500);
   adList.push({
@@ -39,9 +43,9 @@ for (var i = 0; i < adQuantity; i++) {
       guests: roomsQuantity * 2,
       checkin: getRandomIndex(checkinTimes),
       checkout: getRandomIndex(checkoutTimes),
-      features: featuresList.length.toString(),
+      features: getRandomLengthArr(featuresList),
       description: 'Какое-то описание',
-      photos: getRandomIndex(photosSrcs).toString()
+      photos: getRandomLengthArr(photosSrcs)
     }
   });
 }
@@ -50,7 +54,7 @@ var pinTemplate = document.querySelector('#pin')
   .content
   .querySelector('.map__pin');
 
-var renderPin = function (pinData) {
+function renderPin (pinData) {
   var pin = pinTemplate.cloneNode(true);
 
   pin.style = 'left: ' + (pinData.location.x - pin.offsetWidth / 2) + 'px; top: ' + (pinData.location.y - pin.offsetHeight) + 'px;';
@@ -58,7 +62,7 @@ var renderPin = function (pinData) {
   pin.querySelector('img').alt = pinData.offer.title;
 
   return pin;
-};
+}
 
 var fragment = document.createDocumentFragment();
 
@@ -67,3 +71,68 @@ for (var j = 0; j < adList.length; j++) {
 }
 
 pinsContainer.appendChild(fragment);
+
+// MODULE3-TASK3
+
+var cardPopup = document.querySelector('#card')
+  .content
+  .querySelector('.map__card');
+
+var secondFragment = document.createDocumentFragment();
+
+function renderCardPopup (cardData) {
+  var popup = cardPopup.cloneNode(true);
+  var popupTitle = popup.querySelector('.popup__title');
+  var popupAddress = popup.querySelector('.popup__text--address');
+  var popupPrice = popup.querySelector('.popup__text--price');
+  var popupType = popup.querySelector('.popup__type');
+  var popupCapacity = popup.querySelector('.popup__text--capacity');
+  var popupTime = popup.querySelector('.popup__text--time');
+  var popupDescription = popup.querySelector('.popup__description');
+  var popupPhotos = popup.querySelector('.popup__photos');
+  var popupPhotosImg = popupPhotos.querySelector('.popup__photo');
+  var popupAvatar = popup.querySelector('.popup__avatar');
+  var popupFeatures = popup.querySelector('.popup__features');
+
+  popupTitle.textContent = cardData.offer.tittle;
+  popupAddress.textContent = cardData.offer.address;
+  popupPrice.textContent = cardData.offer.price + '₽/ночь';
+  if (cardData.offer.type === 'flat') {
+    popupType.textcontent = 'Квартира';
+  } else if (cardData.offer.type === 'bungalo') {
+    popupType.textContent = 'Бунгала';
+  } else if (cardData.offer.type === 'house') {
+    popupType.textContent = 'Дом';
+  } else if (cardData.offer.type === 'palace') {
+    popupType.textContent = 'Дворец';
+  }
+  popupCapacity.textContent = cardData.offer.rooms + ' компнаты для ' + cardData.offer.guests + ' гостей.';
+  popupTime.textContent = 'Заезд после ' + cardData.offer.checkin + ', выезд до ' + cardData.offer.checkout;
+  popupDescription.textContent = cardData.offer.description;
+  popupAvatar.src = cardData.author.avatar;
+
+
+  for (var d = 0; d < cardData.offer.features.length; d++) {
+    var featuresLi = document.createElement('li');
+    featuresLi.classList.add('popup__feature', 'popup__feature--' + cardData.offer.features[d]);
+    popupFeatures.appendChild(featuresLi);
+  }
+
+
+  if (cardData.offer.photos.length > 1) {
+    for (var a = 1; a < cardData.offer.photos.length; a++) {
+      var copyPopupPhotosImg = popupPhotosImg.cloneNode(true);
+      copyPopupPhotosImg.src = cardData.offer.photos[a];
+      popupPhotos.appendChild(copyPopupPhotosImg);
+    }
+  }
+  popupPhotosImg.src = cardData.offer.photos[0];
+
+
+  return popup;
+};
+
+secondFragment.appendChild(renderCardPopup(getRandomIndex(adList)));
+
+var mapFilters = map.querySelector('.map__filters-container');
+mapFilters.insertAdjacentElement('beforebegin', secondFragment.firstElementChild);
