@@ -32,9 +32,14 @@ var roomsSelect = document.querySelector('#room_number');
 var guestsQuantitySelect = document.querySelector('#capacity');
 var submit = document.querySelector('.ad-form__submit');
 
-var getRandomIndex = function (arr) {
+function getRandomIndex (arr) {
   return arr[Math.ceil(Math.random() * (arr.length - 1))];
-};
+}
+
+function getRandomLengthArr (arr) {
+  var arrCopy = arr.slice(Math.round(Math.random() * (arr.length - 1)));
+  return arrCopy;
+}
 
 var getRandomLengthArr = function (arr) {
   var arrCopy = arr.slice(Math.round(Math.random() * (arr.length - 1)));
@@ -65,11 +70,12 @@ var getUserData = function (counter) {
       features: getRandomLengthArr(FUETURES_LIST),
       description: 'Какое-то описание',
       photos: getRandomLengthArr(PHOTOS_SRCS)
+
     }
   };
 };
 
-var renderPin = function (pinData) {
+function renderPin (pinData) {
   var pin = pinTemplate.cloneNode(true);
 
   pin.style = 'left: ' + (pinData.location.x - pin.offsetWidth / 2) + 'px; top: ' + (pinData.location.y - pin.offsetHeight) + 'px;';
@@ -77,7 +83,7 @@ var renderPin = function (pinData) {
   pin.querySelector('img').alt = pinData.offer.title;
 
   return pin;
-};
+}
 
 // MODULE3-TASK3
 
@@ -217,3 +223,4 @@ mainPin.addEventListener('keydown', function (evt) {
 submit.addEventListener('click', function () {
   validate(roomsSelect, guestsQuantitySelect);
 });
+
