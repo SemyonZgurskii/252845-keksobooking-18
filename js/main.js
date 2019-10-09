@@ -6,38 +6,31 @@ var CHECKOUT_TIMES = ['12:00', '13:00', '14:00'];
 var FUETURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS_SRCS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var AD_QUANTITY = 8;
-
 var adList = [];
-
-// карта
 
 var pinsContainer = document.querySelector('.map__pins');
 var pinsContainerWidth = pinsContainer.offsetWidth;
 var map = document.querySelector('.map');
+var adForm = document.querySelector('.ad-form');
+var fragment = document.createDocumentFragment();
 var pinTemplate = document.querySelector('#pin')
-.content
-.querySelector('.map__pin');
+  .content
+  .querySelector('.map__pin');
 var cardPopup = document.querySelector('#card')
 .content
 .querySelector('.map__card');
+var secondFragment = document.createDocumentFragment();
 var mapFilters = map.querySelector('.map__filters-container');
 var pageFieldsets = document.querySelectorAll('fieldset');
 var mainPin = map.querySelector('.map__pin--main');
-
-// форма
-
-var adForm = document.querySelector('.ad-form');
+var mainPinX = parseInt(mainPin.style.left, 10);
+var mainPinY = parseInt(mainPin.style.top, 10);
 var addressInput = document.querySelector('#address');
+var activeMainPinX = mainPinX + mainPin.offsetWidth / 2;
+var activeMainPinY = mainPinY + mainPin.offsetHeight;
 var roomsSelect = document.querySelector('#room_number');
 var guestsQuantitySelect = document.querySelector('#capacity');
 var submit = document.querySelector('.ad-form__submit');
-var activeMainPinX = mainPinX + mainPin.offsetWidth / 2;
-var activeMainPinY = mainPinY + mainPin.offsetHeight;
-var mainPinX = parseInt(mainPin.style.left, 10);
-var mainPinY = parseInt(mainPin.style.top, 10);
-
-var fragment = document.createDocumentFragment();
-var secondFragment = document.createDocumentFragment();
 
 var getRandomIndex = function (arr) {
   return arr[Math.ceil(Math.random() * (arr.length - 1))];
@@ -85,7 +78,6 @@ var renderPin = function (pinData) {
 
   return pin;
 };
-
 
 // MODULE3-TASK3
 
@@ -192,9 +184,9 @@ var validate = function (rooms, guests) {
   }
 };
 
-
 for (var i = 0; i < AD_QUANTITY; i++) {
   adList.push(getUserData(i));
+}
 
 for (var j = 0; j < adList.length; j++) {
   fragment.appendChild(renderPin(adList[j]));
