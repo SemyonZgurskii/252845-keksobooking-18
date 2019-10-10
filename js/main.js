@@ -19,7 +19,6 @@ var pinTemplate = document.querySelector('#pin')
 var cardPopup = document.querySelector('#card')
 .content
 .querySelector('.map__card');
-var secondFragment = document.createDocumentFragment();
 var mapFilters = map.querySelector('.map__filters-container');
 var pageFieldsets = document.querySelectorAll('fieldset');
 var mainPin = map.querySelector('.map__pin--main');
@@ -100,6 +99,23 @@ var fillPhotosList = function (cardData, parentElement, imgElement) {
   imgElement.src = cardData.offer.photos[0];
 };
 
+var fillHousingType = function (cardData, typeElement) {
+  switch (cardData.offer.type) {
+    case 'flat':
+      typeElement.textContent = 'Квартира';
+      break;
+    case 'bungalo':
+      typeElement.textContent = 'Бунгала';
+      break;
+    case 'house':
+      typeElement.textContent = 'Дом';
+      break;
+    case 'palace':
+      typeElement.textContent = 'Дворец';
+      break;
+  }
+};
+
 var renderCardPopup = function (cardData) {
   var popup = cardPopup.cloneNode(true);
   var popupTitle = popup.querySelector('.popup__title');
@@ -117,34 +133,13 @@ var renderCardPopup = function (cardData) {
   popupTitle.textContent = cardData.offer.tittle;
   popupAddress.textContent = cardData.offer.address;
   popupPrice.textContent = cardData.offer.price + '₽/ночь';
-  if (cardData.offer.type === 'flat') {
-    popupType.textcontent = 'Квартира';
-  } else if (cardData.offer.type === 'bungalo') {
-    popupType.textContent = 'Бунгала';
-  } else if (cardData.offer.type === 'house') {
-    popupType.textContent = 'Дом';
-  } else if (cardData.offer.type === 'palace') {
-    popupType.textContent = 'Дворец';
-  }
-  // switch (cardData.offer.type) {
-  //   case 'flat':
-  //     popupType.textcontent = 'Квартира';
-  //     break;
-  //   case 'bungalo':
-  //     popupType.textcontent = 'Бунгала';
-  //     break;
-  //   case 'house':
-  //     popupType.textcontent = 'Дом';
-  //     break;
-  //   case 'palace':
-  //     popupType.textcontent = 'Дворец';
-  //     break;
-  // }
+
   popupCapacity.textContent = cardData.offer.rooms + ' компнаты для ' + cardData.offer.guests + ' гостей.';
   popupTime.textContent = 'Заезд после ' + cardData.offer.checkin + ', выезд до ' + cardData.offer.checkout;
   popupDescription.textContent = cardData.offer.description;
   popupAvatar.src = cardData.author.avatar;
 
+  fillHousingType(cardData, popupType);
   fillFeatureList(cardData, popupFeatures);
   fillPhotosList(cardData, popupPhotos, popupPhotosImg);
 
@@ -159,7 +154,7 @@ var activatePage = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   pinsContainer.appendChild(fragment);
-  mapFilters.insertAdjacentElement('beforebegin', secondFragment.firstElementChild);
+  mapFilters.insertAdjacentElement('beforebegin', renderCardPopup(getRandomIndex(adList)));
   for (var c = 0; c < pageFieldsets.length; c++) {
     pageFieldsets[c].removeAttribute('disabled');
   }
@@ -171,16 +166,13 @@ var validate = function (rooms, guests) {
   var guestsIndex = guests.options.selectedIndex;
   var guestsNumber = guests.options[guestsIndex].value;
 
-  if (roomsNumber !== exception
-      && guestsNumber === '0') {
+  guests.setCustomValidity('');
+  if (roomsNumber !== exception && guestsNumber === '0') {
     guests.setCustomValidity('Количество гостей долно быть больше нуля');
-  } else if (roomsNumber === exception
-             && guestsNumber !== '0') {
+  } else if (roomsNumber === exception && guestsNumber !== '0') {
     guests.setCustomValidity('Количество гостей не может быть больше 0');
   } else if (guestsNumber > roomsNumber) {
     guests.setCustomValidity('Количество гостей не может превышать количество комнат');
-  } else {
-    guests.setCustomValidity('');
   }
 };
 
@@ -191,8 +183,6 @@ for (var i = 0; i < AD_QUANTITY; i++) {
 for (var j = 0; j < adList.length; j++) {
   fragment.appendChild(renderPin(adList[j]));
 }
-
-secondFragment.appendChild(renderCardPopup(getRandomIndex(adList)));
 
 // MODULE4-TASK2
 
