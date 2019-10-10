@@ -78,8 +78,6 @@ var renderPin = function (pinData) {
   return pin;
 };
 
-// MODULE3-TASK3
-
 var fillFeatureList = function (cardData, parentElement) {
   for (var d = 0; d < cardData.offer.features.length; d++) {
     var featuresLi = document.createElement('li');
@@ -99,21 +97,23 @@ var fillPhotosList = function (cardData, parentElement, imgElement) {
   imgElement.src = cardData.offer.photos[0];
 };
 
-var fillHousingType = function (cardData, typeElement) {
+var getHousingType = function (cardData) {
+  var type = '';
   switch (cardData.offer.type) {
     case 'flat':
-      typeElement.textContent = 'Квартира';
+      type = 'Квартира';
       break;
     case 'bungalo':
-      typeElement.textContent = 'Бунгала';
+      type = 'Бунгала';
       break;
     case 'house':
-      typeElement.textContent = 'Дом';
+      type = 'Дом';
       break;
     case 'palace':
-      typeElement.textContent = 'Дворец';
+      type = 'Дворец';
       break;
   }
+  return type;
 };
 
 var renderCardPopup = function (cardData) {
@@ -139,7 +139,7 @@ var renderCardPopup = function (cardData) {
   popupDescription.textContent = cardData.offer.description;
   popupAvatar.src = cardData.author.avatar;
 
-  fillHousingType(cardData, popupType);
+  popupType.textContent = getHousingType(cardData);
   fillFeatureList(cardData, popupFeatures);
   fillPhotosList(cardData, popupPhotos, popupPhotosImg);
 
@@ -183,8 +183,6 @@ for (var i = 0; i < AD_QUANTITY; i++) {
 for (var j = 0; j < adList.length; j++) {
   fragment.appendChild(renderPin(adList[j]));
 }
-
-// MODULE4-TASK2
 
 addressInput.value = calculatePinLocation(mainPinX, mainPinY);
 
