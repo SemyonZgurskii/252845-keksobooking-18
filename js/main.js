@@ -35,6 +35,7 @@ var activeMainPinY = mainPinY + mainPin.offsetHeight;
 var roomsSelect = document.querySelector('#room_number');
 var guestsQuantitySelect = document.querySelector('#capacity');
 var submit = document.querySelector('.ad-form__submit');
+var isMapActive = false;
 
 var getRandomIndex = function (arr) {
   return arr[Math.ceil(Math.random() * (arr.length - 1))];
@@ -280,18 +281,12 @@ submit.addEventListener('click', function () {
   validateGuests(roomsSelect, guestsQuantitySelect);
 });
 
-mainPin.addEventListener('mousedown', function () {
-  if (document.querySelector('.map--faded')) {
+mainPin.addEventListener('click', function () {
+  if (isMapActive === false) {
     activatePage();
     addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
   }
-});
-
-mainPin.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13 && document.querySelector('.map--faded')) {
-    activatePage();
-    addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
-  }
+  isMapActive = true;
 });
 
 for (var i = 0; i < AD_QUANTITY; i++) {
