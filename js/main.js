@@ -285,8 +285,8 @@ mainPin.addEventListener('click', function () {
   if (!isMapActive) {
     activatePage();
     addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+    isMapActive = true;
   }
-  isMapActive = true;
 });
 
 for (var i = 0; i < AD_QUANTITY; i++) {
