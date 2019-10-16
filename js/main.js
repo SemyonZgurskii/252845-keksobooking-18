@@ -246,36 +246,6 @@ var syncronizeTime = function (masterField, syncronizedField) {
   syncronizedField.value = masterField.value;
 };
 
-for (var i = 0; i < AD_QUANTITY; i++) {
-  adList.push(getUserData(i));
-}
-
-for (var j = 0; j < adList.length; j++) {
-  var generatedPin = renderPin(adList[j]);
-  addElementClickListener(generatedPin, adList[j]);
-  fragment.appendChild(generatedPin);
-}
-
-addressInput.value = calculatePinLocation(mainPinX, mainPinY);
-
-for (var b = 0; b < pageFieldsets.length; b++) {
-  pageFieldsets[b].disabled = true;
-}
-
-mainPin.addEventListener('mousedown', function () {
-  activatePage();
-  addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
-});
-
-mainPin.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
-    activatePage();
-    addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
-  }
-});
-
-setMinPrice(typeField, priceField);
-
 typeField.addEventListener('change', function () {
   setMinPrice(typeField, priceField);
 });
@@ -309,3 +279,33 @@ document.addEventListener('keydown', function (evt) {
 submit.addEventListener('click', function () {
   validateGuests(roomsSelect, guestsQuantitySelect);
 });
+
+for (var i = 0; i < AD_QUANTITY; i++) {
+  adList.push(getUserData(i));
+}
+
+for (var j = 0; j < adList.length; j++) {
+  var generatedPin = renderPin(adList[j]);
+  addElementClickListener(generatedPin, adList[j]);
+  fragment.appendChild(generatedPin);
+}
+
+addressInput.value = calculatePinLocation(mainPinX, mainPinY);
+
+for (var b = 0; b < pageFieldsets.length; b++) {
+  pageFieldsets[b].disabled = true;
+}
+
+mainPin.addEventListener('mousedown', function () {
+  activatePage();
+  addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+});
+
+mainPin.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    activatePage();
+    addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+  }
+});
+
+setMinPrice(typeField, priceField);
