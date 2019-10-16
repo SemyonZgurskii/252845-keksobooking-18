@@ -288,11 +288,19 @@ timeOutField.addEventListener('change', function () {
   syncronizeTime(timeOutField, timeInField);
 });
 
-titleField.addEventListener('invalid', validateTitle);
-titleField.addEventListener('input', validateTitle);
+titleField.addEventListener('invalid', function () {
+  validateTitle();
+});
+titleField.addEventListener('input', function () {
+  validateTitle();
+});
 
-priceField.addEventListener('invalid', validatePrice);
-priceField.addEventListener('input', validatePrice);
+priceField.addEventListener('invalid', function () {
+  validatePrice();
+});
+priceField.addEventListener('input', function () {
+  validatePrice();
+});
 
 document.addEventListener('keydown', function (evt) {
   onEscPress(evt);
