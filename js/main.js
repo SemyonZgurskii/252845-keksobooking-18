@@ -202,6 +202,24 @@ var validateGuests = function (rooms, guests) {
   }
 };
 
+var validateTitle = function () {
+  titleField.setCustomValidity('');
+  if (titleField.validity.valueMissing) {
+    titleField.setCustomValidity('Обязательное поле');
+  } else if (titleField.validity.tooShort) {
+    titleField.setCustomValidity('Длина заголовка должна быть не менее ' + titleField.minLength + ' символов');
+  }
+};
+
+var validatePrice = function () {
+  priceField.setCustomValidity('');
+  if (priceField.validity.valueMissing) {
+    priceField.setCustomValidity('Обязатльное поле');
+  } else if (priceField.validity.rangeUnderflow) {
+    priceField.setCustomValidity('Минимально допустимое значение: ' + priceField.min);
+  }
+};
+
 var setMinPrice = function (houseTypeInput, priceInput) {
   var type = houseTypeInput.value;
   switch (type) {
@@ -256,6 +274,8 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
+setMinPrice(typeField, priceField);
+
 typeField.addEventListener('change', function () {
   setMinPrice(typeField, priceField);
 });
@@ -268,27 +288,11 @@ timeOutField.addEventListener('change', function () {
   syncronizeTime(timeOutField, timeInField);
 });
 
-titleField.addEventListener('input', function () {
-  titleField.setCustomValidity('');
-  var titleLength = titleField.value.length;
-  if (titleLength === 0) {
-    titleField.setCustomValidity('Обязательное поле');
-  } else if (titleLength < titleField.minlength) {
-    titleField.setCustomValidity('Длина заголовка должна быть не менее ' + titleField.minlength + 'символов');
-  }
-});
+titleField.addEventListener('invalid', validateTitle);
+titleField.addEventListener('input', validateTitle);
 
-priceField.addEventListener('input', function () {
-  var minPrice = parseInt(priceField.min, 10);
-  var maxPrice = parseInt(priceField.max, 10);
-  var price = parseInt(priceField.value, 10);
-  priceField.setCustomValidity('');
-  if (price > maxPrice) {
-    priceField.setCustomValidity('Максимально допустимое значение: ' + maxPrice);
-  } else if (price < minPrice) {
-    priceField.setCustomValidity('Минимально допустимое значение: ' + minPrice);
-  }
-});
+priceField.addEventListener('invalid', validatePrice);
+priceField.addEventListener('input', validatePrice);
 
 document.addEventListener('keydown', function (evt) {
   onEscPress(evt);
