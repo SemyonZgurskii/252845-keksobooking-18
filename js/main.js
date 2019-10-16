@@ -225,11 +225,7 @@ var setMinPrice = function (houseTypeInput, priceInput) {
 };
 
 var syncronizeTime = function (masterField, syncronizedField) {
-  for (var l = 0; l < syncronizedField.options.length; l++) {
-    if (masterField.value === syncronizedField.options[l].value) {
-      syncronizedField.options[l].selected = true;
-    }
-  }
+  syncronizedField.value = masterField.value;
 };
 
 for (var i = 0; i < AD_QUANTITY; i++) {
@@ -260,33 +256,6 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 
-var onSubmitPress = function () {
-  validateGuests(roomsSelect, guestsQuantitySelect);
-
-  titleField.addEventListener('input', function () {
-    titleField.setCustomValidity('');
-    var titleLength = titleField.value.length;
-    if (titleLength === 0) {
-      titleField.setCustomValidity('Обязательное поле');
-    } else if (titleLength < titleField.minlength) {
-      titleField.setCustomValidity('Длина заголовка должна быть не менее ' + titleField.minlength + 'символов');
-    }
-  });
-
-
-  priceField.addEventListener('input', function () {
-    var minPrice = parseInt(priceField.min, 10);
-    var maxPrice = parseInt(priceField.max, 10);
-    var price = parseInt(priceField.value, 10);
-    priceField.setCustomValidity('');
-    if (price > maxPrice) {
-      priceField.setCustomValidity('Максимально допустимое значение: ' + maxPrice);
-    } else if (price < minPrice) {
-      priceField.setCustomValidity('Минимально допустимое значение: ' + minPrice);
-    }
-  });
-};
-
 typeField.addEventListener('change', function () {
   setMinPrice(typeField, priceField);
 });
@@ -299,9 +268,32 @@ timeOutField.addEventListener('change', function () {
   syncronizeTime(timeOutField, timeInField);
 });
 
-submit.addEventListener('click', onSubmitPress);
-// submit.removeEventListener('click', onSubmitPress);
+titleField.addEventListener('input', function () {
+  titleField.setCustomValidity('');
+  var titleLength = titleField.value.length;
+  if (titleLength === 0) {
+    titleField.setCustomValidity('Обязательное поле');
+  } else if (titleLength < titleField.minlength) {
+    titleField.setCustomValidity('Длина заголовка должна быть не менее ' + titleField.minlength + 'символов');
+  }
+});
+
+priceField.addEventListener('input', function () {
+  var minPrice = parseInt(priceField.min, 10);
+  var maxPrice = parseInt(priceField.max, 10);
+  var price = parseInt(priceField.value, 10);
+  priceField.setCustomValidity('');
+  if (price > maxPrice) {
+    priceField.setCustomValidity('Максимально допустимое значение: ' + maxPrice);
+  } else if (price < minPrice) {
+    priceField.setCustomValidity('Минимально допустимое значение: ' + minPrice);
+  }
+});
 
 document.addEventListener('keydown', function (evt) {
   onEscPress(evt);
+});
+
+submit.addEventListener('click', function () {
+  validateGuests(roomsSelect, guestsQuantitySelect);
 });
