@@ -136,7 +136,7 @@ var renderCardPopup = function (cardData) {
   var popupFeatures = popup.querySelector('.popup__features');
   var popupCloseButton = popup.querySelector('.popup__close');
 
-  popupTitle.textContent = cardData.offer.tittle;
+  popupTitle.textContent = cardData.offer.title;
   popupAddress.textContent = cardData.offer.address;
   popupPrice.textContent = cardData.offer.price + '₽/ночь';
   popupCapacity.textContent = cardData.offer.rooms + ' компнаты для ' + cardData.offer.guests + ' гостей.';
@@ -281,12 +281,14 @@ submit.addEventListener('click', function () {
 });
 
 mainPin.addEventListener('mousedown', function () {
-  activatePage();
-  addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+  if (document.querySelector('.map--faded')) {
+    activatePage();
+    addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+  }
 });
 
 mainPin.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
+  if (evt.keyCode === 13 && document.querySelector('.map--faded')) {
     activatePage();
     addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
   }
