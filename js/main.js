@@ -282,7 +282,7 @@ submit.addEventListener('click', function () {
 });
 
 mainPin.addEventListener('click', function () {
-  if (isMapActive === false) {
+  if (!isMapActive) {
     activatePage();
     addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
   }
