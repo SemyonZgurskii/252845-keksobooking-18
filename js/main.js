@@ -280,6 +280,18 @@ submit.addEventListener('click', function () {
   validateGuests(roomsSelect, guestsQuantitySelect);
 });
 
+mainPin.addEventListener('mousedown', function () {
+  activatePage();
+  addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+});
+
+mainPin.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    activatePage();
+    addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
+  }
+});
+
 for (var i = 0; i < AD_QUANTITY; i++) {
   adList.push(getUserData(i));
 }
@@ -295,17 +307,5 @@ addressInput.value = calculatePinLocation(mainPinX, mainPinY);
 for (var b = 0; b < pageFieldsets.length; b++) {
   pageFieldsets[b].disabled = true;
 }
-
-mainPin.addEventListener('mousedown', function () {
-  activatePage();
-  addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
-});
-
-mainPin.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
-    activatePage();
-    addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
-  }
-});
 
 setMinPrice(typeField, priceField);
