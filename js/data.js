@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   var TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var CHECKIN_TIMES = ['12:00', '13:00', '14:00'];
   var CHECKOUT_TIMES = ['12:00', '13:00', '14:00'];
