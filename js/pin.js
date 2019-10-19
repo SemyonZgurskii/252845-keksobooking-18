@@ -2,7 +2,6 @@
 
 (function () {
 
-  var renderCardPopup = window.modal.renderCardPopup;
   var mainContainer = window.modal.map;
   var adList = window.data.adList;
 
@@ -29,18 +28,21 @@
         var activeCardPopup = mainContainer.querySelector('.popup');
         activeCardPopup.parentNode.removeChild(activeCardPopup);
       }
-      filters.insertAdjacentElement('beforebegin', renderCardPopup(elementData));
+      filters.insertAdjacentElement('beforebegin', window.modal.renderCardPopup(elementData));
     });
   };
 
-  for (var j = 0; j < adList.length; j++) {
-    var generatedItem = renderItem(adList[j]);
-    addElementClickListener(generatedItem, adList[j]);
-    fragment.appendChild(generatedItem);
-  }
+  var fillFragment = function () {
+    for (var j = 0; j < adList.length; j++) {
+      var generatedItem = renderItem(adList[j]);
+      addElementClickListener(generatedItem, adList[j]);
+      fragment.appendChild(generatedItem);
+    }
+    return fragment;
+  };
 
   window.pin = {
-    fragment: fragment,
+    fragment: fillFragment,
     filters: filters,
   };
 

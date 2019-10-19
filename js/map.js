@@ -2,13 +2,7 @@
 
 (function () {
 
-  var generatedPins = window.pin.fragment;
-  var adBlank = window.form.adBlank;
-  var adList = window.data.adList;
-  var renderCardPopup = window.modal.renderCardPopup;
   var mainContainer = window.modal.map;
-  var filters = window.pin.filters;
-
 
   var pageFieldsets = document.querySelectorAll('fieldset');
   var mainPin = mainContainer.querySelector('.map__pin--main');
@@ -26,9 +20,9 @@
 
   var activatePage = function () {
     mainContainer.classList.remove('map--faded');
-    adBlank.classList.remove('ad-form--disabled');
-    window.data.pinsContainer.appendChild(generatedPins);
-    filters.insertAdjacentElement('beforebegin', renderCardPopup(window.data.getRandomIndex(adList)));
+    window.form.adBlank.classList.remove('ad-form--disabled');
+    window.data.pinsContainer.appendChild(window.pin.fragment());
+    window.pin.filters.insertAdjacentElement('beforebegin', window.modal.renderCardPopup(window.data.getRandomIndex(window.data.adList)));
     for (var c = 0; c < pageFieldsets.length; c++) {
       pageFieldsets[c].removeAttribute('disabled');
     }
