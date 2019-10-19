@@ -4,7 +4,9 @@
 
   var mainContainer = window.modal.map;
   var adList = window.data.adList;
+  var container = window.data.pinsContainer;
 
+  var popup = mainContainer.querySelector('.popup');
   var template = document.querySelector('#pin')
       .content
     .querySelector('.map__pin');
@@ -23,11 +25,11 @@
 
   var addElementClickListener = function (element, elementData) {
     element.addEventListener('click', function () {
-      if (mainContainer.querySelector('.popup')) {
-        var activeCardPopup = mainContainer.querySelector('.popup');
+      if (popup) {
+        var activeCardPopup = popup;
         activeCardPopup.parentNode.removeChild(activeCardPopup);
       }
-      mainContainer.querySelector('.map__pins').appendChild(window.modal.renderCardPopup(elementData));
+      container.appendChild(window.modal.renderCardPopup(elementData));
     });
   };
 
