@@ -2,12 +2,12 @@
 
 (function () {
 
-  var adForm = document.querySelector('.ad-form');
-  var titleField = adForm.querySelector('#title');
-  var typeField = adForm.querySelector('#type');
-  var priceField = adForm.querySelector('#price');
-  var timeInField = adForm.querySelector('#timein');
-  var timeOutField = adForm.querySelector('#timeout');
+  var adBlank = document.querySelector('.ad-form');
+  var titleField = adBlank.querySelector('#title');
+  var typeField = adBlank.querySelector('#type');
+  var priceField = adBlank.querySelector('#price');
+  var timeInField = adBlank.querySelector('#timein');
+  var timeOutField = adBlank.querySelector('#timeout');
   var roomsSelect = document.querySelector('#room_number');
   var guestsQuantitySelect = document.querySelector('#capacity');
   var submit = document.querySelector('.ad-form__submit');
@@ -104,8 +104,8 @@
 
   setMinPrice(typeField, priceField);
 
-  window.profile = {
-    adForm: adForm
+  window.form = {
+    adBlank: adBlank,
   };
 
 })();
