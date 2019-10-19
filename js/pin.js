@@ -5,13 +5,12 @@
   var mainContainer = window.modal.map;
   var adList = window.data.adList;
 
-  var filters = mainContainer.querySelector('.map__filters-container');
   var template = document.querySelector('#pin')
       .content
     .querySelector('.map__pin');
   var fragment = document.createDocumentFragment();
 
-  var renderItem = function (cardData) {
+  var createItem = function (cardData) {
     var item = template.cloneNode(true);
 
     item.style = 'left: ' + (cardData.location.x - item.offsetWidth / 2) + 'px; top: ' + (cardData.location.y - item.offsetHeight) + 'px;';
@@ -28,13 +27,13 @@
         var activeCardPopup = mainContainer.querySelector('.popup');
         activeCardPopup.parentNode.removeChild(activeCardPopup);
       }
-      filters.insertAdjacentElement('beforebegin', window.modal.renderCardPopup(elementData));
+      mainContainer.querySelector('.map__pins').appendChild(window.modal.renderCardPopup(elementData));
     });
   };
 
-  var fillFragment = function () {
+  var getRenderedItems = function () {
     for (var j = 0; j < adList.length; j++) {
-      var generatedItem = renderItem(adList[j]);
+      var generatedItem = createItem(adList[j]);
       addElementClickListener(generatedItem, adList[j]);
       fragment.appendChild(generatedItem);
     }
@@ -42,8 +41,7 @@
   };
 
   window.pin = {
-    fragment: fillFragment,
-    filters: filters,
+    getRenderedItems: getRenderedItems,
   };
 
 })();

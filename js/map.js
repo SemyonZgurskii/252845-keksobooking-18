@@ -11,6 +11,7 @@
   var addressInput = document.querySelector('#address');
   var activeMainPinX = mainPinX + mainPin.offsetWidth / 2;
   var activeMainPinY = mainPinY + mainPin.offsetHeight;
+  var filters = mainContainer.querySelector('.map__filters-container');
 
   var isMapActive = false;
 
@@ -21,8 +22,8 @@
   var activatePage = function () {
     mainContainer.classList.remove('map--faded');
     window.form.adBlank.classList.remove('ad-form--disabled');
-    window.data.pinsContainer.appendChild(window.pin.fragment());
-    window.pin.filters.insertAdjacentElement('beforebegin', window.modal.renderCardPopup(window.data.getRandomIndex(window.data.adList)));
+    window.data.pinsContainer.appendChild(window.pin.getRenderedItems());
+    filters.insertAdjacentElement('beforebegin', window.modal.renderCardPopup(window.data.getRandomIndex(window.data.adList)));
     for (var c = 0; c < pageFieldsets.length; c++) {
       pageFieldsets[c].removeAttribute('disabled');
     }
