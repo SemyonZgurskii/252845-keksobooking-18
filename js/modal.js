@@ -71,17 +71,22 @@
     fillFeatureList(cardData, popupFeatures);
     fillPhotosList(cardData, popupPhotos, popupPhotosImg);
     popupCloseButton.addEventListener('click', function () {
-      window.modal.popup.parentNode.removeChild(window.modal.popup);
-      window.modal.popup = null;
+      deletePopup();
     });
     window.modal.popup = popup;
 
     return popup;
   };
 
+  var deletePopup = function () {
+    window.modal.popup.parentNode.removeChild(window.modal.popup);
+    window.modal.popup = null;
+  };
+
   window.modal = {
     renderCardPopup: renderCardPopup,
-    map: map
+    map: map,
+    deletePopup: deletePopup,
   };
 
 })();

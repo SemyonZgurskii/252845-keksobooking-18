@@ -30,8 +30,7 @@
 
   var onEscPress = function (evt) {
     if (evt.keyCode === 27 && window.modal.popup) {
-      window.modal.popup.parentNode.removeChild(window.modal.popup);
-      window.modal.popup = null;
+      window.modal.deletePopup();
       document.removeEventListener('keydown', onEscPress);
     }
   };
