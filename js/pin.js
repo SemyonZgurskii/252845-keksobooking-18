@@ -2,7 +2,6 @@
 
 (function () {
 
-  var mainContainer = window.modal.map;
   var adList = window.data.adList;
   var container = window.data.pinsContainer;
 
@@ -24,13 +23,22 @@
 
   var addElementClickListener = function (element, elementData) {
     element.addEventListener('click', function () {
-      var popup = mainContainer.querySelector('.popup');
-      if (popup) {
-        popup.parentNode.removeChild(popup);
+      if (window.map.popup) {
+        window.map.popup.parentNode.removeChild(window.map.popup);
       }
       container.appendChild(window.modal.renderCardPopup(elementData));
+      window.map.popup = container.querySelector('.popup');
     });
   };
+  // var addElementClickListener = function (element, elementData) {
+  //   element.addEventListener('click', function () {
+  //     var popup = mainContainer.querySelector('.popup');
+  //     if (popup) {
+  //       popup.parentNode.removeChild(popup);
+  //     }
+  //     container.appendChild(window.modal.renderCardPopup(elementData));
+  //   });
+  // };
 
   var getRenderedItems = function () {
     for (var j = 0; j < adList.length; j++) {
