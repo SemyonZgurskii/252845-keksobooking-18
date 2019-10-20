@@ -71,8 +71,8 @@
     fillFeatureList(cardData, popupFeatures);
     fillPhotosList(cardData, popupPhotos, popupPhotosImg);
     popupCloseButton.addEventListener('click', function () {
-      var activePopup = map.querySelector('.popup');
-      activePopup.parentNode.removeChild(activePopup);
+      window.map.popup.parentNode.removeChild(window.map.popup);
+      delete window.map.popup;
     });
 
     return popup;

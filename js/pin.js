@@ -25,20 +25,12 @@
     element.addEventListener('click', function () {
       if (window.map.popup) {
         window.map.popup.parentNode.removeChild(window.map.popup);
+        delete window.map.popup;
       }
       container.appendChild(window.modal.renderCardPopup(elementData));
       window.map.popup = container.querySelector('.popup');
     });
   };
-  // var addElementClickListener = function (element, elementData) {
-  //   element.addEventListener('click', function () {
-  //     var popup = mainContainer.querySelector('.popup');
-  //     if (popup) {
-  //       popup.parentNode.removeChild(popup);
-  //     }
-  //     container.appendChild(window.modal.renderCardPopup(elementData));
-  //   });
-  // };
 
   var getRenderedItems = function () {
     for (var j = 0; j < adList.length; j++) {

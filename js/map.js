@@ -32,17 +32,10 @@
   var onEscPress = function (evt) {
     if (evt.keyCode === 27 && window.map.popup) {
       window.map.popup.parentNode.removeChild(window.map.popup);
+      delete window.map.popup;
       document.removeEventListener('keydown', onEscPress);
     }
   };
-  // var onEscPress = function (evt) {
-  //   var popup = mainContainer.querySelector('.popup');
-  //   if (evt.keyCode === 27 && popup) {
-  //     var activePopup = popup;
-  //     activePopup.parentNode.removeChild(activePopup);
-  //     document.removeEventListener('keydown', onEscPress);
-  //   }
-  // };
 
   mainPin.addEventListener('click', function () {
     if (!isMapActive) {
