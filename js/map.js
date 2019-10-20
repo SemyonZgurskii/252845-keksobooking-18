@@ -28,12 +28,6 @@
     }
   };
 
-  var onEscPress = function (evt) {
-    if (evt.keyCode === 27) {
-      window.modal.deletePopup();
-    }
-  };
-
   mainPin.addEventListener('click', function () {
     if (!isMapActive) {
       activatePage();
@@ -42,18 +36,11 @@
     }
   });
 
-  document.addEventListener('keydown', function (evt) {
-    onEscPress(evt);
-  });
 
   for (var b = 0; b < pageFieldsets.length; b++) {
     pageFieldsets[b].disabled = true;
   }
 
   addressInput.value = calculatePinLocation(mainPinX, mainPinY); // в каком файле его место ?
-
-  window.map = {
-    onEscPress: onEscPress,
-  };
 
 })();
