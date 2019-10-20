@@ -29,9 +29,8 @@
   };
 
   var onEscPress = function (evt) {
-    if (evt.keyCode === 27 && window.modal.popup) {
+    if (evt.keyCode === 27) {
       window.modal.deletePopup();
-      document.removeEventListener('keydown', onEscPress);
     }
   };
 
@@ -52,5 +51,9 @@
   }
 
   addressInput.value = calculatePinLocation(mainPinX, mainPinY); // в каком файле его место ?
+
+  window.map = {
+    onEscPress: onEscPress,
+  };
 
 })();

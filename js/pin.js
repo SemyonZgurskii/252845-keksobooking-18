@@ -23,9 +23,7 @@
 
   var addElementClickListener = function (element, elementData) {
     element.addEventListener('click', function () {
-      if (window.modal.popup) {
-        window.modal.deletePopup();
-      }
+      window.modal.deletePopup();
       container.appendChild(window.modal.renderCardPopup(elementData));
     });
   };

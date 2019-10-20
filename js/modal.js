@@ -2,6 +2,7 @@
 
 (function () {
 
+  var popup;
   var map = document.querySelector('.map');
   var cardPopup = document.querySelector('#card')
   .content
@@ -46,7 +47,7 @@
   };
 
   var renderCardPopup = function (cardData) {
-    var popup = cardPopup.cloneNode(true);
+    popup = cardPopup.cloneNode(true);
     var popupTitle = popup.querySelector('.popup__title');
     var popupAddress = popup.querySelector('.popup__text--address');
     var popupPrice = popup.querySelector('.popup__text--price');
@@ -73,14 +74,16 @@
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });
-    window.modal.popup = popup;
 
     return popup;
   };
 
   var deletePopup = function () {
-    window.modal.popup.parentNode.removeChild(window.modal.popup);
-    window.modal.popup = null;
+    if (popup) {
+      popup.parentNode.removeChild(popup);
+      popup = null;
+      document.removeEventListener('keydown', window.map.onEscPress);
+    }
   };
 
   window.modal = {
