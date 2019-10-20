@@ -29,8 +29,9 @@
   };
 
   var onEscPress = function (evt) {
-    if (evt.keyCode === 27 && mainContainer.querySelector('.popup')) {
-      var activePopup = mainContainer.querySelector('.popup');
+    var popup = mainContainer.querySelector('.popup');
+    if (evt.keyCode === 27 && popup) {
+      var activePopup = popup;
       activePopup.parentNode.removeChild(activePopup);
       document.removeEventListener('keydown', onEscPress);
     }
