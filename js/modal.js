@@ -71,9 +71,10 @@
     fillFeatureList(cardData, popupFeatures);
     fillPhotosList(cardData, popupPhotos, popupPhotosImg);
     popupCloseButton.addEventListener('click', function () {
-      window.map.popup.parentNode.removeChild(window.map.popup);
-      delete window.map.popup;
+      window.modal.popup.parentNode.removeChild(window.modal.popup);
+      window.modal.popup = null;
     });
+    window.modal.popup = popup;
 
     return popup;
   };

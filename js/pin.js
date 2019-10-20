@@ -23,12 +23,12 @@
 
   var addElementClickListener = function (element, elementData) {
     element.addEventListener('click', function () {
-      if (window.map.popup) {
-        window.map.popup.parentNode.removeChild(window.map.popup);
-        delete window.map.popup;
+      if (window.modal.popup) {
+        window.modal.popup.parentNode.removeChild(window.modal.popup);
+        window.modal.popup = null;
       }
       container.appendChild(window.modal.renderCardPopup(elementData));
-      window.map.popup = container.querySelector('.popup');
+      window.modal.popup = container.querySelector('.popup');
     });
   };
 

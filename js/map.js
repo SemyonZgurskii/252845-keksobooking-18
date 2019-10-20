@@ -23,16 +23,15 @@
     window.form.adBlank.classList.remove('ad-form--disabled');
     window.data.pinsContainer.appendChild(window.pin.getRenderedItems());
     mainContainer.appendChild(window.modal.renderCardPopup(window.data.getRandomIndex(window.data.adList)));
-    window.map.popup = mainContainer.querySelector('.popup');
     for (var c = 0; c < pageFieldsets.length; c++) {
       pageFieldsets[c].removeAttribute('disabled');
     }
   };
 
   var onEscPress = function (evt) {
-    if (evt.keyCode === 27 && window.map.popup) {
-      window.map.popup.parentNode.removeChild(window.map.popup);
-      delete window.map.popup;
+    if (evt.keyCode === 27 && window.modal.popup) {
+      window.modal.popup.parentNode.removeChild(window.modal.popup);
+      window.modal.popup = null;
       document.removeEventListener('keydown', onEscPress);
     }
   };
@@ -54,7 +53,5 @@
   }
 
   addressInput.value = calculatePinLocation(mainPinX, mainPinY); // в каком файле его место ?
-
-  window.map = {};
 
 })();
