@@ -74,9 +74,7 @@
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });
-    document.addEventListener('keydown', function (evt) {
-      onEscPress(evt);
-    });
+    document.addEventListener('keydown', onEscPress);
 
     return popup;
   };
