@@ -6,17 +6,9 @@
 
   var pageFieldsets = document.querySelectorAll('fieldset');
   var mainPin = mainContainer.querySelector('.map__pin--main');
-  var mainPinX = parseInt(mainPin.style.left, 10);
-  var mainPinY = parseInt(mainPin.style.top, 10);
   var addressInput = document.querySelector('#address');
-  var activeMainPinX = mainPinX + mainPin.offsetWidth / 2;
-  var activeMainPinY = mainPinY + mainPin.offsetHeight;
 
   var isMapActive = false;
-
-  var calculatePinLocation = function (x, y) {
-    return Math.round(x) + ', ' + Math.round(y);
-  };
 
   var activatePage = function () {
     mainContainer.classList.remove('map--faded');
@@ -28,19 +20,20 @@
     }
   };
 
-  mainPin.addEventListener('click', function () {
+  var setPoint = function () {
     if (!isMapActive) {
       activatePage();
-      addressInput.value = calculatePinLocation(activeMainPinX, activeMainPinY);
       isMapActive = true;
     }
-  });
+  };
+
+  mainPin.addEventListener('click', setPoint);
 
 
   for (var b = 0; b < pageFieldsets.length; b++) {
     pageFieldsets[b].disabled = true;
   }
 
-  addressInput.value = calculatePinLocation(mainPinX, mainPinY); // в каком файле его место ?
+  window.holder.letItemDrag(mainPin, setPoint, addressInput);
 
 })();

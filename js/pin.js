@@ -37,6 +37,19 @@
     return fragment;
   };
 
+  // var changePinLocation = function (item, fieldToFill) {
+  //   var calculateLocation = function () {
+  //     return Math.round((item.offsetLeft + item.offsetWidth / 2)) + ', ' + Math.round((item.offsetTop + item.offsetHeight));
+  //   };
+
+  //   item.addEventListener('mousemove', function () {
+  //     if (item.offsetTop < 130 || item.offsetTop > 630) {
+  //       item.style.top = (item.offsetTop + shift.y) + 'px';
+  //     }
+  //     fieldToFill.value = calculateLocation();
+  //   });
+  // };
+
   window.pin = {
     getRenderedItems: getRenderedItems,
   };
