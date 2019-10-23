@@ -2,6 +2,7 @@
 
 (function () {
 
+  var isMapActive = false;
   var adList = window.data.adList;
   var container = window.data.pinsContainer;
 
@@ -37,7 +38,6 @@
     return fragment;
   };
 
-  var isMapActive = false;
 
   var setPoint = function () {
     if (!isMapActive) {
