@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var MIN_Y = 130;
+  var MAX_Y = 630;
+  var MIN_X = 0;
+  var MAX_X = 1200;
 
   var drag = function (item, listenerToStop, fieldToFill) {
     item.addEventListener('mousedown', function (evt) {
@@ -13,8 +17,16 @@
 
       var dragged = false;
 
+      var getLocationX = function () {
+        return Math.round((item.offsetLeft + item.offsetWidth / 2));
+      };
+
+      var getLocationY = function () {
+        return Math.round((item.offsetTop + item.offsetHeight));
+      };
+
       var calculateLocation = function () {
-        return Math.round((item.offsetLeft + item.offsetWidth / 2)) + ', ' + Math.round((item.offsetTop + item.offsetHeight));
+        return getLocationX() + ', ' + getLocationY();
       };
 
       var onMouseMove = function (moveEvt) {
@@ -34,11 +46,11 @@
         item.style.top = (item.offsetTop - shift.y) + 'px';
         item.style.left = (item.offsetLeft - shift.x) + 'px';
 
-        if ((item.offsetTop + item.offsetHeight) < 130 || (item.offsetTop + item.offsetHeight) > 630) {
+        if (getLocationY() < MIN_Y || getLocationY() > MAX_Y) {
           item.style.top = (item.offsetTop + shift.y) + 'px';
         }
 
-        if ((item.offsetLeft + item.offsetWidth / 2) < 0 || (item.offsetLeft + item.offsetWidth / 2) > item.parentNode.offsetWidth) {
+        if (getLocationX() < MIN_X || getLocationX() > MAX_X) {
           item.style.left = (item.offsetLeft + shift.x) + 'px';
         }
 
