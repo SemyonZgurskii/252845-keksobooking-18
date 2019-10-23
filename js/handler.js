@@ -34,9 +34,14 @@
         item.style.top = (item.offsetTop - shift.y) + 'px';
         item.style.left = (item.offsetLeft - shift.x) + 'px';
 
-        if (item.offsetTop < 130 || item.offsetTop > 630) {
+        if ((item.offsetTop + item.offsetHeight) < 130 || (item.offsetTop + item.offsetHeight) > 630) {
           item.style.top = (item.offsetTop + shift.y) + 'px';
         }
+
+        if ((item.offsetLeft + item.offsetWidth / 2) < 0 || (item.offsetLeft + item.offsetWidth / 2) > item.parentNode.offsetWidth) {
+          item.style.left = (item.offsetLeft + shift.x) + 'px';
+        }
+
         fieldToFill.value = calculateLocation();
       };
 
@@ -63,7 +68,7 @@
     });
   };
 
-  window.holder = {
+  window.handler = {
     drag: drag,
   };
 

@@ -26,7 +26,7 @@
     pageFieldsets[b].disabled = true;
   }
 
-  window.holder.drag(mainPin, setPoint, addressInput);
+  window.handler.drag(mainPin, setPoint, addressInput);
 
   window.map = {
     activatePage: activatePage,
