@@ -2,7 +2,7 @@
 
 (function () {
 
-  var letItemDrag = function (item, listenerToStop, fieldToFill) {
+  var drag = function (item, listenerToStop, fieldToFill) {
     item.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
@@ -64,7 +64,7 @@
   };
 
   window.holder = {
-    letItemDrag: letItemDrag,
+    drag: drag,
   };
 
 })();

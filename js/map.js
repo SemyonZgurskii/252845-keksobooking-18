@@ -3,12 +3,13 @@
 (function () {
 
   var mainContainer = window.modal.map;
+  var setPoint = window.map.setPoint;
 
   var pageFieldsets = document.querySelectorAll('fieldset');
   var mainPin = mainContainer.querySelector('.map__pin--main');
   var addressInput = document.querySelector('#address');
 
-  var isMapActive = false;
+  // var isMapActive = false;
 
   var activatePage = function () {
     mainContainer.classList.remove('map--faded');
@@ -20,12 +21,12 @@
     }
   };
 
-  var setPoint = function () {
-    if (!isMapActive) {
-      activatePage();
-      isMapActive = true;
-    }
-  };
+  // var setPoint = function () {
+  //   if (!isMapActive) {
+  //     activatePage();
+  //     isMapActive = true;
+  //   }
+  // };
 
   mainPin.addEventListener('click', setPoint);
 
@@ -34,6 +35,10 @@
     pageFieldsets[b].disabled = true;
   }
 
-  window.holder.letItemDrag(mainPin, setPoint, addressInput);
+  window.holder.drag(mainPin, setPoint, addressInput);
+
+  window.map = {
+    activatePage: activatePage,
+  };
 
 })();
