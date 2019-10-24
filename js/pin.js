@@ -2,6 +2,7 @@
 
 (function () {
 
+  var isMapActive = false;
   var adList = window.data.adList;
   var container = window.data.pinsContainer;
 
@@ -37,8 +38,17 @@
     return fragment;
   };
 
+
+  var setPoint = function () {
+    if (!isMapActive) {
+      window.map.activatePage();
+      isMapActive = true;
+    }
+  };
+
   window.pin = {
     getRenderedItems: getRenderedItems,
+    setPoint: setPoint,
   };
 
 })();
