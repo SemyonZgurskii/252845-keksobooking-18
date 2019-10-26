@@ -3,7 +3,6 @@
 (function () {
 
   var isMapActive = false;
-  var adList = window.data.adList;
   var container = window.data.pinsContainer;
 
   var template = document.querySelector('#pin')
@@ -29,13 +28,13 @@
     });
   };
 
-  var getRenderedItems = function () {
-    for (var j = 0; j < adList.length; j++) {
-      var generatedItem = createItem(adList[j]);
-      addElementClickListener(generatedItem, adList[j]);
+  var getRenderedItems = function (itemsData) {
+    for (var j = 0; j < itemsData.length; j++) {
+      var generatedItem = createItem(itemsData[j]);
+      addElementClickListener(generatedItem, itemsData[j]);
       fragment.appendChild(generatedItem);
     }
-    return fragment;
+    window.data.pinsContainer.appendChild(fragment);
   };
 
 
