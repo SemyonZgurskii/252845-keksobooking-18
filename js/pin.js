@@ -3,7 +3,7 @@
 (function () {
 
   var isMapActive = false;
-  var container = window.data.pinsContainer;
+  var container = document.querySelector('.map__pins');
 
   var template = document.querySelector('#pin')
       .content
@@ -34,7 +34,7 @@
       addElementClickListener(generatedItem, itemsData[j]);
       fragment.appendChild(generatedItem);
     }
-    window.data.pinsContainer.appendChild(fragment);
+    container.appendChild(fragment);
   };
 
 
