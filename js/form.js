@@ -72,6 +72,25 @@
     syncronizedField.value = masterField.value;
   };
 
+  var onLoad = function () {
+    adBlank.reset();
+    var activePins = window.pin.container.querySelectorAll('.map__pin--user');
+    for (var i = 0; i < activePins.length; i++) {
+      activePins[i].parentNode.removeChild(activePins[i]);
+    }
+    window.modal.deletePopup();
+    window.pin.mainItem.style.left = window.pin.basicX + 'px';
+    window.pin.mainItem.style.top = window.pin.basicY + 'px';
+    window.modal.map.classList.add('map--faded');
+    window.form.adBlank.classList.add('ad-form--disabled');
+    for (var c = 0; c < window.map.pageFieldsets.length; c++) {
+      window.map.pageFieldsets[c].disabled = true;
+    }
+    window.pin.isMapActive = false;
+    window.pin.mainItem.removeEventListener('click', window.pin.setPoint);
+    window.pin.mainItem.addEventListener('click', window.pin.setPoint);
+  };
+
   typeField.addEventListener('change', function () {
     setMinPrice(typeField, priceField);
   });
@@ -103,6 +122,15 @@
   });
 
   setMinPrice(typeField, priceField);
+
+  adBlank.addEventListener('submit', function (evt) {
+    // console.log('aoeusnthaoeu');
+    window.backend.upLoad(new FormData(adBlank), function () {
+      // console.log('yoooo');
+      onLoad();
+    });
+    evt.preventDefault();
+  });
 
   window.form = {
     adBlank: adBlank,

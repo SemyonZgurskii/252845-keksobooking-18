@@ -4,7 +4,9 @@
 
   var isMapActive = false;
   var container = document.querySelector('.map__pins');
-
+  var mainItem = container.querySelector('.map__pin--main');
+  var basicX = mainItem.offsetLeft;
+  var basicY = mainItem.offsetTop;
   var template = document.querySelector('#pin')
       .content
     .querySelector('.map__pin');
@@ -48,6 +50,11 @@
   window.pin = {
     getRenderedItems: getRenderedItems,
     setPoint: setPoint,
+    container: container,
+    mainItem: mainItem,
+    basicX: basicX,
+    basicY: basicY,
+    isMapActive: isMapActive,
   };
 
 })();

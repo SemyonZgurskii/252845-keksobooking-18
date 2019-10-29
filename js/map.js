@@ -6,7 +6,6 @@
   var setPoint = window.pin.setPoint;
 
   var pageFieldsets = document.querySelectorAll('fieldset');
-  var mainPin = mainContainer.querySelector('.map__pin--main');
   var addressInput = document.querySelector('#address');
 
   var onError = function (errorMessage) {
@@ -24,20 +23,21 @@
     window.form.adBlank.classList.remove('ad-form--disabled');
     window.backend.load(window.pin.getRenderedItems, onError);
     for (var c = 0; c < pageFieldsets.length; c++) {
-      pageFieldsets[c].removeAttribute('disabled');
+      pageFieldsets[c].disabled = false;
     }
   };
 
-  mainPin.addEventListener('click', setPoint);
+  window.pin.mainItem.addEventListener('click', setPoint);
 
   for (var b = 0; b < pageFieldsets.length; b++) {
     pageFieldsets[b].disabled = true;
   }
 
-  window.handler.drag(mainPin, setPoint, addressInput);
+  window.handler.drag(window.pin.mainItem, setPoint, addressInput);
 
   window.map = {
     activatePage: activatePage,
+    pageFieldsets: pageFieldsets,
   };
 
 })();
