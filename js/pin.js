@@ -5,8 +5,8 @@
   var isMapActive = false;
   var container = document.querySelector('.map__pins');
   var mainItem = container.querySelector('.map__pin--main');
-  var basicX = mainItem.offsetLeft;
-  var basicY = mainItem.offsetTop;
+  var defaultX = mainItem.offsetLeft;
+  var defaultY = mainItem.offsetTop;
   var template = document.querySelector('#pin')
       .content
     .querySelector('.map__pin');
@@ -41,10 +41,30 @@
 
 
   var setPoint = function () {
-    if (!isMapActive) {
+    if (!window.pin.isMapActive) {
       window.map.activatePage();
-      isMapActive = true;
+      window.pin.isMapActive = true;
     }
+  };
+
+  var backToDefaultPosition = function () {
+    mainItem.style.left = defaultX + 'px';
+    mainItem.style.top = defaultY + 'px';
+  };
+
+  var removeActiveItems = function () {
+    var activePins = container.querySelectorAll('.map__pin--user');
+    for (var i = 0; i < activePins.length; i++) {
+      activePins[i].parentNode.removeChild(activePins[i]);
+    }
+  };
+
+  var dropToDefaultSettings = function () {
+    removeActiveItems();
+    backToDefaultPosition();
+    window.pin.isMapActive = false;
+    mainItem.removeEventListener('click', setPoint);
+    mainItem.addEventListener('click', setPoint);
   };
 
   window.pin = {
@@ -52,9 +72,8 @@
     setPoint: setPoint,
     container: container,
     mainItem: mainItem,
-    basicX: basicX,
-    basicY: basicY,
     isMapActive: isMapActive,
+    dropToDefaultSettings: dropToDefaultSettings,
   };
 
 })();

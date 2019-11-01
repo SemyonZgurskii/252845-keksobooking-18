@@ -2,10 +2,10 @@
 
 (function () {
 
+  var pageMainContent = document.querySelector('main');
   var mainContainer = window.modal.map;
   var setPoint = window.pin.setPoint;
 
-  var pageFieldsets = document.querySelectorAll('fieldset');
   var addressInput = document.querySelector('#address');
 
   var onError = function (errorMessage) {
@@ -13,31 +13,41 @@
     .querySelector('.error');
     var errorWindow = errorWindowTemplate.cloneNode(true);
     var errorTextContainer = errorWindow.querySelector('.error__message');
-
+    var errorButton = errorWindow.querySelector('.error__button');
     errorTextContainer.textContent = errorMessage;
-    window.modal.map.appendChild(errorWindow);
+
+    pageMainContent.appendChild(errorWindow);
+
+    errorButton.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      errorWindow.parentNode.removeChild(errorWindow);
+    });
+
+    window.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 27) {
+        errorWindow.parentNode.removeChild(errorWindow);
+      }
+    });
+
+    window.addEventListener('click', function () {
+      errorWindow.parentNode.removeChild(errorWindow);
+    });
   };
 
   var activatePage = function () {
     mainContainer.classList.remove('map--faded');
     window.form.adBlank.classList.remove('ad-form--disabled');
-    window.backend.load(window.pin.getRenderedItems, onError);
-    for (var c = 0; c < pageFieldsets.length; c++) {
-      pageFieldsets[c].disabled = false;
-    }
+    window.backend.transferData('GET', window.backend.GET_URL, window.pin.getRenderedItems, onError);
+    window.form.toggleFieldsetsAllow(false);
   };
 
-  window.pin.mainItem.addEventListener('click', setPoint);
+  window.pin.mainItem.addEventListener('mousedown', setPoint);
 
-  for (var b = 0; b < pageFieldsets.length; b++) {
-    pageFieldsets[b].disabled = true;
-  }
-
-  window.handler.drag(window.pin.mainItem, setPoint, addressInput);
+  window.handler.drag(window.pin.mainItem, addressInput);
 
   window.map = {
     activatePage: activatePage,
-    pageFieldsets: pageFieldsets,
+    onError: onError,
   };
 
 })();

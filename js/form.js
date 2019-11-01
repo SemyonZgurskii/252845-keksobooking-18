@@ -3,6 +3,7 @@
 (function () {
 
   var adBlank = document.querySelector('.ad-form');
+  var pageFieldsets = document.querySelectorAll('fieldset');
   var titleField = adBlank.querySelector('#title');
   var typeField = adBlank.querySelector('#type');
   var priceField = adBlank.querySelector('#price');
@@ -72,24 +73,52 @@
     syncronizedField.value = masterField.value;
   };
 
-  var onLoad = function () {
+
+  var showSuccessMessage = function () {
+    var successWindowTemplate = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+    var successWindow = successWindowTemplate.cloneNode(true);
+    window.modal.map.appendChild(successWindow);
+
+    var onWindowEsc = function (evt) {
+      if (evt.keyCode === 27) {
+        successWindow.parentNode.removeChild(successWindow);
+        window.removeEventListener('keydown', onWindowEsc);
+      }
+    };
+
+    var onWindowClick = function () {
+      successWindow.parentNode.removeChild(successWindow);
+      window.removeEventListener('click', onWindowClick);
+    };
+
+    window.addEventListener('keydown', onWindowEsc);
+    window.addEventListener('click', onWindowClick);
+  };
+
+  var onDataLoad = function () {
     adBlank.reset();
-    var activePins = window.pin.container.querySelectorAll('.map__pin--user');
-    for (var i = 0; i < activePins.length; i++) {
-      activePins[i].parentNode.removeChild(activePins[i]);
-    }
     window.modal.deletePopup();
-    window.pin.mainItem.style.left = window.pin.basicX + 'px';
-    window.pin.mainItem.style.top = window.pin.basicY + 'px';
     window.modal.map.classList.add('map--faded');
     window.form.adBlank.classList.add('ad-form--disabled');
-    for (var c = 0; c < window.map.pageFieldsets.length; c++) {
-      window.map.pageFieldsets[c].disabled = true;
-    }
-    window.pin.isMapActive = false;
-    window.pin.mainItem.removeEventListener('click', window.pin.setPoint);
-    window.pin.mainItem.addEventListener('click', window.pin.setPoint);
+    window.pin.dropToDefaultSettings();
+    toggleFieldsetsAllow(false);
+    showSuccessMessage();
   };
+
+  var onAdBlankSubmit = function (evt) {
+    window.backend.transferData('POST', window.backend.SEND_URL, onDataLoad, window.map.onError, new FormData(adBlank));
+    evt.preventDefault();
+  };
+
+  var toggleFieldsetsAllow = function (flag) {
+    for (var b = 0; b < pageFieldsets.length; b++) {
+      pageFieldsets[b].disabled = flag;
+    }
+  };
+
+  toggleFieldsetsAllow(true);
 
   typeField.addEventListener('change', function () {
     setMinPrice(typeField, priceField);
@@ -123,17 +152,12 @@
 
   setMinPrice(typeField, priceField);
 
-  adBlank.addEventListener('submit', function (evt) {
-    // console.log('aoeusnthaoeu');
-    window.backend.upLoad(new FormData(adBlank), function () {
-      // console.log('yoooo');
-      onLoad();
-    });
-    evt.preventDefault();
-  });
+  adBlank.addEventListener('submit', onAdBlankSubmit);
 
   window.form = {
     adBlank: adBlank,
+    pageFieldsets: pageFieldsets,
+    toggleFieldsetsAllow: toggleFieldsetsAllow,
   };
 
 })();

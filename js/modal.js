@@ -16,15 +16,17 @@
     }
   };
 
-  var fillPhotosList = function (cardData, parentElement, imgElement) {
-    if (cardData.offer.photos.length > 1) {
-      for (var a = 1; a < cardData.offer.photos.length; a++) {
-        var copyPopupPhotosImg = imgElement.cloneNode(true);
-        copyPopupPhotosImg.src = cardData.offer.photos[a];
-        parentElement.appendChild(copyPopupPhotosImg);
-      }
+  var fillPhotosList = function (cardData, parentElement) {
+    for (var a = 0; a < cardData.offer.photos.length; a++) {
+      var imgElement = document.createElement('img');
+      imgElement.classList.add('popup__photo');
+      imgElement.width = '45';
+      imgElement.height = '40';
+      imgElement.alt = 'Фотография жилья';
+      imgElement.src = cardData.offer.photos[a];
+
+      parentElement.appendChild(imgElement);
     }
-    imgElement.src = cardData.offer.photos[0];
   };
 
   var getHousingType = function (cardData) {
@@ -56,7 +58,6 @@
     var popupTime = popup.querySelector('.popup__text--time');
     var popupDescription = popup.querySelector('.popup__description');
     var popupPhotos = popup.querySelector('.popup__photos');
-    var popupPhotosImg = popupPhotos.querySelector('.popup__photo');
     var popupAvatar = popup.querySelector('.popup__avatar');
     var popupFeatures = popup.querySelector('.popup__features');
     var popupCloseButton = popup.querySelector('.popup__close');
@@ -70,7 +71,7 @@
     popupAvatar.src = cardData.author.avatar;
     popupType.textContent = getHousingType(cardData);
     fillFeatureList(cardData, popupFeatures);
-    fillPhotosList(cardData, popupPhotos, popupPhotosImg);
+    fillPhotosList(cardData, popupPhotos);
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });
