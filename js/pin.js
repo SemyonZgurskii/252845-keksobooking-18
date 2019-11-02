@@ -2,7 +2,7 @@
 
 (function () {
 
-  var isMapActive = false;
+  window.pin.isMapActive = false;
   var container = document.querySelector('.map__pins');
   var mainItem = container.querySelector('.map__pin--main');
   var defaultX = mainItem.offsetLeft;
@@ -11,6 +11,7 @@
       .content
     .querySelector('.map__pin');
   var fragment = document.createDocumentFragment();
+  var addressInput = document.querySelector('#address');
 
   var createItem = function (cardData) {
     var item = template.cloneNode(true);
@@ -47,7 +48,7 @@
     }
   };
 
-  var backToDefaultPosition = function () {
+  var setDefaultPosition = function () {
     mainItem.style.left = defaultX + 'px';
     mainItem.style.top = defaultY + 'px';
   };
@@ -61,18 +62,18 @@
 
   var dropToDefaultSettings = function () {
     removeActiveItems();
-    backToDefaultPosition();
+    setDefaultPosition();
     window.pin.isMapActive = false;
     mainItem.removeEventListener('click', setPoint);
     mainItem.addEventListener('click', setPoint);
   };
 
+  mainItem.addEventListener('mousedown', setPoint);
+  window.handler.drag(mainItem, addressInput);
+
   window.pin = {
     getRenderedItems: getRenderedItems,
-    setPoint: setPoint,
     container: container,
-    mainItem: mainItem,
-    isMapActive: isMapActive,
     dropToDefaultSettings: dropToDefaultSettings,
   };
 

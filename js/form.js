@@ -84,17 +84,17 @@
     var onWindowEsc = function (evt) {
       if (evt.keyCode === 27) {
         successWindow.parentNode.removeChild(successWindow);
-        window.removeEventListener('keydown', onWindowEsc);
+        document.removeEventListener('keydown', onWindowEsc);
       }
     };
 
     var onWindowClick = function () {
       successWindow.parentNode.removeChild(successWindow);
-      window.removeEventListener('click', onWindowClick);
+      document.removeEventListener('click', onWindowClick);
     };
 
-    window.addEventListener('keydown', onWindowEsc);
-    window.addEventListener('click', onWindowClick);
+    document.addEventListener('keydown', onWindowEsc);
+    document.addEventListener('click', onWindowClick);
   };
 
   var onDataLoad = function () {
@@ -103,22 +103,22 @@
     window.modal.map.classList.add('map--faded');
     window.form.adBlank.classList.add('ad-form--disabled');
     window.pin.dropToDefaultSettings();
-    toggleFieldsetsAllow(false);
+    toggleFieldsets(false);
     showSuccessMessage();
   };
 
   var onAdBlankSubmit = function (evt) {
-    window.backend.transferData('POST', window.backend.SEND_URL, onDataLoad, window.map.onError, new FormData(adBlank));
+    window.backend.transferData('POST', window.backend.urlToSend, onDataLoad, window.map.onError, new FormData(adBlank));
     evt.preventDefault();
   };
 
-  var toggleFieldsetsAllow = function (flag) {
+  var toggleFieldsets = function (isDisabled) {
     for (var b = 0; b < pageFieldsets.length; b++) {
-      pageFieldsets[b].disabled = flag;
+      pageFieldsets[b].disabled = isDisabled;
     }
   };
 
-  toggleFieldsetsAllow(true);
+  toggleFieldsets(true);
 
   typeField.addEventListener('change', function () {
     setMinPrice(typeField, priceField);
@@ -157,7 +157,7 @@
   window.form = {
     adBlank: adBlank,
     pageFieldsets: pageFieldsets,
-    toggleFieldsetsAllow: toggleFieldsetsAllow,
+    toggleFieldsets: toggleFieldsets,
   };
 
 })();

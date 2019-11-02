@@ -2,8 +2,8 @@
 
 (function () {
 
-  var GET_URL = 'https://js.dump.academy/keksobooking/data';
-  var SEND_URL = 'https://js.dump.academy/keksobooking';
+  var urlToDownload = 'https://js.dump.academy/keksobooking/data';
+  var urlToSend = 'https://js.dump.academy/keksobooking';
 
   var transferData = function (method, URL, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
@@ -23,8 +23,8 @@
 
   window.backend = {
     transferData: transferData,
-    GET_URL: GET_URL,
-    SEND_URL: SEND_URL,
+    urlToDownload: urlToDownload,
+    urlToSend: urlToSend,
   };
 
 })();
