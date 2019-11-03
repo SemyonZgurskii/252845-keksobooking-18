@@ -37,9 +37,9 @@
     }
   };
 
-  var getHousingType = function (currentType) {
+  var getHousingType = function (housingTpe) {
     var type = '';
-    switch (currentType) {
+    switch (housingTpe) {
       case 'flat':
         type = 'Квартира';
         break;
