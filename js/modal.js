@@ -8,38 +8,38 @@
   .content
   .querySelector('.map__card');
 
-  var addFeaturesElement = function (cardData, parentElement) {
-    var featuresLi = document.createElement('li');
-    featuresLi.classList.add('popup__feature', 'popup__feature--' + cardData);
-    parentElement.appendChild(featuresLi);
+  var addFeaturesElement = function (featuresArr, parentElement) {
+    var featuresListItem = document.createElement('li');
+    featuresListItem.classList.add('popup__feature', 'popup__feature--' + featuresArr);
+    parentElement.appendChild(featuresListItem);
   };
 
-  var fillFeatureList = function (cardData, parentElement) {
-    for (var d = 0; d < cardData.length; d++) {
-      addFeaturesElement(cardData[d], parentElement);
+  var fillFeatureList = function (featuresArr, parentElement) {
+    for (var d = 0; d < featuresArr.length; d++) {
+      addFeaturesElement(featuresArr[d], parentElement);
     }
   };
 
-  var addPhotosElement = function (cardData, parentElement) {
+  var addPhotosElement = function (photosArr, parentElement) {
     var imgElement = document.createElement('img');
     imgElement.classList.add('popup__photo');
     imgElement.width = '45';
     imgElement.height = '40';
     imgElement.alt = 'Фотография жилья';
-    imgElement.src = cardData;
+    imgElement.src = photosArr;
 
     parentElement.appendChild(imgElement);
   };
 
-  var fillPhotosList = function (cardData, parentElement) {
-    for (var a = 0; a < cardData.length; a++) {
-      addPhotosElement(cardData[a], parentElement);
+  var fillPhotosList = function (photosArr, parentElement) {
+    for (var a = 0; a < photosArr.length; a++) {
+      addPhotosElement(photosArr[a], parentElement);
     }
   };
 
-  var getHousingType = function (cardData) {
+  var getHousingType = function (currentType) {
     var type = '';
-    switch (cardData.offer.type) {
+    switch (currentType) {
       case 'flat':
         type = 'Квартира';
         break;
@@ -77,7 +77,7 @@
     popupTime.textContent = 'Заезд после ' + cardData.offer.checkin + ', выезд до ' + cardData.offer.checkout;
     popupDescription.textContent = cardData.offer.description;
     popupAvatar.src = cardData.author.avatar;
-    popupType.textContent = getHousingType(cardData);
+    popupType.textContent = getHousingType(cardData.offer.type);
     fillFeatureList(cardData.offer.features, popupFeatures);
     fillPhotosList(cardData.offer.photos, popupPhotos);
     popupCloseButton.addEventListener('click', function () {
