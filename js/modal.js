@@ -8,9 +8,9 @@
   .content
   .querySelector('.map__card');
 
-  var addFeaturesElement = function (featuresArr, parentElement) {
+  var addFeaturesElement = function (feature, parentElement) {
     var featuresListItem = document.createElement('li');
-    featuresListItem.classList.add('popup__feature', 'popup__feature--' + featuresArr);
+    featuresListItem.classList.add('popup__feature', 'popup__feature--' + feature);
     parentElement.appendChild(featuresListItem);
   };
 
@@ -20,13 +20,13 @@
     }
   };
 
-  var addPhotosElement = function (photosArr, parentElement) {
+  var addPhotosElement = function (photoSrc, parentElement) {
     var imgElement = document.createElement('img');
     imgElement.classList.add('popup__photo');
     imgElement.width = '45';
     imgElement.height = '40';
     imgElement.alt = 'Фотография жилья';
-    imgElement.src = photosArr;
+    imgElement.src = photoSrc;
 
     parentElement.appendChild(imgElement);
   };
@@ -37,9 +37,9 @@
     }
   };
 
-  var getHousingType = function (housingTpe) {
+  var getHousingType = function (housingType) {
     var type = '';
-    switch (housingTpe) {
+    switch (housingType) {
       case 'flat':
         type = 'Квартира';
         break;
