@@ -8,32 +8,32 @@
   .content
   .querySelector('.map__card');
 
-  var addFeaturesElement = function (cardData, parentElement, counter) {
+  var addFeaturesElement = function (cardData, parentElement) {
     var featuresLi = document.createElement('li');
-    featuresLi.classList.add('popup__feature', 'popup__feature--' + cardData.offer.features[counter]);
+    featuresLi.classList.add('popup__feature', 'popup__feature--' + cardData);
     parentElement.appendChild(featuresLi);
   };
 
   var fillFeatureList = function (cardData, parentElement) {
-    for (var d = 0; d < cardData.offer.features.length; d++) {
-      addFeaturesElement(cardData, parentElement, d);
+    for (var d = 0; d < cardData.length; d++) {
+      addFeaturesElement(cardData[d], parentElement);
     }
   };
 
-  var addPhotosElement = function (cardData, parentElement, counter) {
+  var addPhotosElement = function (cardData, parentElement) {
     var imgElement = document.createElement('img');
     imgElement.classList.add('popup__photo');
     imgElement.width = '45';
     imgElement.height = '40';
     imgElement.alt = 'Фотография жилья';
-    imgElement.src = cardData.offer.photos[counter];
+    imgElement.src = cardData;
 
     parentElement.appendChild(imgElement);
   };
 
   var fillPhotosList = function (cardData, parentElement) {
-    for (var a = 0; a < cardData.offer.photos.length; a++) {
-      addPhotosElement(cardData, parentElement, a);
+    for (var a = 0; a < cardData.length; a++) {
+      addPhotosElement(cardData[a], parentElement);
     }
   };
 
@@ -78,8 +78,8 @@
     popupDescription.textContent = cardData.offer.description;
     popupAvatar.src = cardData.author.avatar;
     popupType.textContent = getHousingType(cardData);
-    fillFeatureList(cardData, popupFeatures);
-    fillPhotosList(cardData, popupPhotos);
+    fillFeatureList(cardData.offer.features, popupFeatures);
+    fillPhotosList(cardData.offer.photos, popupPhotos);
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });

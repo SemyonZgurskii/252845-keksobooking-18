@@ -108,7 +108,7 @@
   };
 
   var onAdBlankSubmit = function (evt) {
-    window.backend.transferData('POST', window.backend.urlToSend, onDataLoad, window.map.onError, new FormData(adBlank));
+    window.backend.transferData('POST', window.backend.SEND_URL, onDataLoad, window.map.onError, new FormData(adBlank));
     evt.preventDefault();
   };
 

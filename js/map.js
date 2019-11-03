@@ -39,7 +39,7 @@
   var activatePage = function () {
     mainContainer.classList.remove('map--faded');
     window.form.adBlank.classList.remove('ad-form--disabled');
-    window.backend.transferData('GET', window.backend.urlToDownload, window.pin.getRenderedItems, onError);
+    window.backend.transferData('GET', window.backend.GET_URL, window.pin.getRenderedItems, onError);
     window.form.toggleFieldsets(false);
   };
 

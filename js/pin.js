@@ -2,7 +2,7 @@
 
 (function () {
 
-  window.pin.isMapActive = false;
+  var isMapActive = false;
   var container = document.querySelector('.map__pins');
   var mainItem = container.querySelector('.map__pin--main');
   var defaultX = mainItem.offsetLeft;
@@ -42,9 +42,9 @@
 
 
   var setPoint = function () {
-    if (!window.pin.isMapActive) {
+    if (!isMapActive) {
       window.map.activatePage();
-      window.pin.isMapActive = true;
+      isMapActive = true;
     }
   };
 
@@ -63,7 +63,7 @@
   var dropToDefaultSettings = function () {
     removeActiveItems();
     setDefaultPosition();
-    window.pin.isMapActive = false;
+    isMapActive = false;
     mainItem.removeEventListener('click', setPoint);
     mainItem.addEventListener('click', setPoint);
   };

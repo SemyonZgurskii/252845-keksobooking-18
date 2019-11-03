@@ -2,10 +2,10 @@
 
 (function () {
 
-  var urlToDownload = 'https://js.dump.academy/keksobooking/data';
-  var urlToSend = 'https://js.dump.academy/keksobooking';
+  var GET_URL = 'https://js.dump.academy/keksobooking/data';
+  var SEND_URL = 'https://js.dump.academy/keksobooking';
 
-  var transferData = function (method, URL, onLoad, onError, data) {
+  var transferData = function (method, url, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -17,14 +17,14 @@
       }
     });
 
-    xhr.open(method, URL);
+    xhr.open(method, url);
     xhr.send(data);
   };
 
   window.backend = {
     transferData: transferData,
-    urlToDownload: urlToDownload,
-    urlToSend: urlToSend,
+    GET_URL: GET_URL,
+    SEND_URL: SEND_URL,
   };
 
 })();
