@@ -113,9 +113,9 @@
   };
 
   var toggleFieldsets = function (isDisabled) {
-    for (var b = 0; b < pageFieldsets.length; b++) {
-      pageFieldsets[b].disabled = isDisabled;
-    }
+    pageFieldsets.forEach(function (fieldset) {
+      fieldset.disabled = isDisabled;
+    });
   };
 
   toggleFieldsets(true);

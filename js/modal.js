@@ -15,9 +15,9 @@
   };
 
   var fillFeatureList = function (featuresArr, parentElement) {
-    for (var d = 0; d < featuresArr.length; d++) {
-      addFeaturesElement(featuresArr[d], parentElement);
-    }
+    featuresArr.forEach(function (feature) {
+      addFeaturesElement(feature, parentElement);
+    });
   };
 
   var addPhotosElement = function (photoSrc, parentElement) {
@@ -32,9 +32,9 @@
   };
 
   var fillPhotosList = function (photosArr, parentElement) {
-    for (var a = 0; a < photosArr.length; a++) {
-      addPhotosElement(photosArr[a], parentElement);
-    }
+    photosArr.forEach(function (photo) {
+      addPhotosElement(photo, parentElement);
+    });
   };
 
   var getHousingType = function (housingType) {

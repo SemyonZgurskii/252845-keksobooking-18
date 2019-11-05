@@ -32,11 +32,11 @@
   };
 
   var getRenderedItems = function (itemsData) {
-    for (var j = 0; j < itemsData.length; j++) {
-      var generatedItem = createItem(itemsData[j]);
-      addElementClickListener(generatedItem, itemsData[j]);
+    window.filter.getProcessedData(itemsData).forEach(function (itemData) {
+      var generatedItem = createItem(itemData);
+      addElementClickListener(generatedItem, itemData);
       fragment.appendChild(generatedItem);
-    }
+    });
     container.appendChild(fragment);
   };
 
@@ -54,10 +54,10 @@
   };
 
   var removeActiveItems = function () {
-    var activePins = container.querySelectorAll('.map__pin--user');
-    for (var i = 0; i < activePins.length; i++) {
-      activePins[i].parentNode.removeChild(activePins[i]);
-    }
+    var activeItems = container.querySelectorAll('.map__pin--user');
+    activeItems.forEach(function (item) {
+      container.removeChild(item);
+    });
   };
 
   var dropToDefaultSettings = function () {
@@ -75,6 +75,7 @@
     getRenderedItems: getRenderedItems,
     container: container,
     dropToDefaultSettings: dropToDefaultSettings,
+    removeActiveItems: removeActiveItems,
   };
 
 })();
