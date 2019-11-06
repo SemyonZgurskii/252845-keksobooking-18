@@ -9,20 +9,15 @@
   var getProcessedData = function (loadedData) {
 
     var sameHousingType = loadedData.filter(function (it) {
-      return it.offer.type === housingType.value;
+      return it.offer.type === housingType.value || housingType.value === 'any';
     });
 
-    var selectedData = sameHousingType.concat(window.backend.originalData);
-    var uniqueData = selectedData.filter(function (it, i) {
-      return selectedData.indexOf(it) === i;
-    });
-
-    return uniqueData.slice(0, PINS_QUANTITY);
+    return sameHousingType.slice(0, PINS_QUANTITY);
   };
 
   housingType.addEventListener('change', function () {
     window.pin.removeActiveItems();
-    window.pin.getRenderedItems(window.backend.originalData);
+    window.pin.getRenderedItems(window.pin.originalData);
   });
 
   window.filter = {

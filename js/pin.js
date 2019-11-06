@@ -32,6 +32,7 @@
   };
 
   var getRenderedItems = function (itemsData) {
+    window.pin.originalData = itemsData;
     window.filter.getProcessedData(itemsData).forEach(function (itemData) {
       var generatedItem = createItem(itemData);
       addElementClickListener(generatedItem, itemData);
