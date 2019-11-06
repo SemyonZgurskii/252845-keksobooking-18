@@ -3,6 +3,7 @@
 (function () {
 
   var adBlank = document.querySelector('.ad-form');
+  var pageFieldsets = document.querySelectorAll('fieldset');
   var titleField = adBlank.querySelector('#title');
   var typeField = adBlank.querySelector('#type');
   var priceField = adBlank.querySelector('#price');
@@ -72,6 +73,53 @@
     syncronizedField.value = masterField.value;
   };
 
+
+  var showSuccessMessage = function () {
+    var successWindowTemplate = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+    var successWindow = successWindowTemplate.cloneNode(true);
+    window.modal.map.appendChild(successWindow);
+
+    var onWindowEsc = function (evt) {
+      if (evt.keyCode === 27) {
+        successWindow.parentNode.removeChild(successWindow);
+        document.removeEventListener('keydown', onWindowEsc);
+      }
+    };
+
+    var onWindowClick = function () {
+      successWindow.parentNode.removeChild(successWindow);
+      document.removeEventListener('click', onWindowClick);
+    };
+
+    document.addEventListener('keydown', onWindowEsc);
+    document.addEventListener('click', onWindowClick);
+  };
+
+  var onDataLoad = function () {
+    adBlank.reset();
+    window.modal.deletePopup();
+    window.modal.map.classList.add('map--faded');
+    window.form.adBlank.classList.add('ad-form--disabled');
+    window.pin.dropToDefaultSettings();
+    toggleFieldsets(false);
+    showSuccessMessage();
+  };
+
+  var onAdBlankSubmit = function (evt) {
+    window.backend.transferData('POST', window.backend.SEND_URL, onDataLoad, window.map.onError, new FormData(adBlank));
+    evt.preventDefault();
+  };
+
+  var toggleFieldsets = function (isDisabled) {
+    pageFieldsets.forEach(function (fieldset) {
+      fieldset.disabled = isDisabled;
+    });
+  };
+
+  toggleFieldsets(true);
+
   typeField.addEventListener('change', function () {
     setMinPrice(typeField, priceField);
   });
@@ -104,8 +152,12 @@
 
   setMinPrice(typeField, priceField);
 
+  adBlank.addEventListener('submit', onAdBlankSubmit);
+
   window.form = {
     adBlank: adBlank,
+    pageFieldsets: pageFieldsets,
+    toggleFieldsets: toggleFieldsets,
   };
 
 })();

@@ -2,42 +2,50 @@
 
 (function () {
 
+  var pageMainContent = document.querySelector('main');
   var mainContainer = window.modal.map;
-  var setPoint = window.pin.setPoint;
-
-  var pageFieldsets = document.querySelectorAll('fieldset');
-  var mainPin = mainContainer.querySelector('.map__pin--main');
-  var addressInput = document.querySelector('#address');
 
   var onError = function (errorMessage) {
     var errorWindowTemplate = document.querySelector('#error').content
     .querySelector('.error');
     var errorWindow = errorWindowTemplate.cloneNode(true);
     var errorTextContainer = errorWindow.querySelector('.error__message');
+    var errorButton = errorWindow.querySelector('.error__button');
+
+    var removeErrorWindow = function () {
+      pageMainContent.removeChild(errorWindow);
+    };
 
     errorTextContainer.textContent = errorMessage;
-    window.modal.map.appendChild(errorWindow);
+
+    pageMainContent.appendChild(errorWindow);
+
+    errorButton.addEventListener('click', function (evt) {
+      evt.preventDefault();
+      removeErrorWindow();
+    });
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 27) {
+        removeErrorWindow();
+      }
+    });
+
+    document.addEventListener('click', function () {
+      removeErrorWindow();
+    });
   };
 
   var activatePage = function () {
     mainContainer.classList.remove('map--faded');
     window.form.adBlank.classList.remove('ad-form--disabled');
-    window.backend.load(window.pin.getRenderedItems, onError);
-    for (var c = 0; c < pageFieldsets.length; c++) {
-      pageFieldsets[c].removeAttribute('disabled');
-    }
+    window.backend.transferData('GET', window.backend.GET_URL, window.pin.getRenderedItems, onError);
+    window.form.toggleFieldsets(false);
   };
-
-  mainPin.addEventListener('click', setPoint);
-
-  for (var b = 0; b < pageFieldsets.length; b++) {
-    pageFieldsets[b].disabled = true;
-  }
-
-  window.handler.drag(mainPin, setPoint, addressInput);
 
   window.map = {
     activatePage: activatePage,
+    onError: onError,
   };
 
 })();

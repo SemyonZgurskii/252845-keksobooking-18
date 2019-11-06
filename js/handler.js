@@ -7,7 +7,7 @@
   var MAX_X = 1200;
   var POINTER_HEIGHT = 16;
 
-  var drag = function (item, listenerToStop, fieldToFill) {
+  var drag = function (item, fieldToFill) {
     item.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
@@ -64,7 +64,6 @@
       var onMouseUp = function (upEvt) {
         upEvt.preventDefault();
 
-        item.addEventListener('click', listenerToStop);
         fieldToFill.value = calculateLocation();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
@@ -74,7 +73,6 @@
             dragEvt.preventDefault();
             item.removeEventListener('click', onClickPreventDefault);
           };
-          item.removeEventListener('click', listenerToStop);
           item.addEventListener('click', onClickPreventDefault);
         }
       };

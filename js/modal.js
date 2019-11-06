@@ -8,28 +8,38 @@
   .content
   .querySelector('.map__card');
 
-  var fillFeatureList = function (cardData, parentElement) {
-    for (var d = 0; d < cardData.offer.features.length; d++) {
-      var featuresLi = document.createElement('li');
-      featuresLi.classList.add('popup__feature', 'popup__feature--' + cardData.offer.features[d]);
-      parentElement.appendChild(featuresLi);
-    }
+  var addFeaturesElement = function (feature, parentElement) {
+    var featuresListItem = document.createElement('li');
+    featuresListItem.classList.add('popup__feature', 'popup__feature--' + feature);
+    parentElement.appendChild(featuresListItem);
   };
 
-  var fillPhotosList = function (cardData, parentElement, imgElement) {
-    if (cardData.offer.photos.length > 1) {
-      for (var a = 1; a < cardData.offer.photos.length; a++) {
-        var copyPopupPhotosImg = imgElement.cloneNode(true);
-        copyPopupPhotosImg.src = cardData.offer.photos[a];
-        parentElement.appendChild(copyPopupPhotosImg);
-      }
-    }
-    imgElement.src = cardData.offer.photos[0];
+  var fillFeatureList = function (featuresArr, parentElement) {
+    featuresArr.forEach(function (feature) {
+      addFeaturesElement(feature, parentElement);
+    });
   };
 
-  var getHousingType = function (cardData) {
+  var addPhotosElement = function (photoSrc, parentElement) {
+    var imgElement = document.createElement('img');
+    imgElement.classList.add('popup__photo');
+    imgElement.width = '45';
+    imgElement.height = '40';
+    imgElement.alt = 'Фотография жилья';
+    imgElement.src = photoSrc;
+
+    parentElement.appendChild(imgElement);
+  };
+
+  var fillPhotosList = function (photosArr, parentElement) {
+    photosArr.forEach(function (photo) {
+      addPhotosElement(photo, parentElement);
+    });
+  };
+
+  var getHousingType = function (housingType) {
     var type = '';
-    switch (cardData.offer.type) {
+    switch (housingType) {
       case 'flat':
         type = 'Квартира';
         break;
@@ -56,7 +66,6 @@
     var popupTime = popup.querySelector('.popup__text--time');
     var popupDescription = popup.querySelector('.popup__description');
     var popupPhotos = popup.querySelector('.popup__photos');
-    var popupPhotosImg = popupPhotos.querySelector('.popup__photo');
     var popupAvatar = popup.querySelector('.popup__avatar');
     var popupFeatures = popup.querySelector('.popup__features');
     var popupCloseButton = popup.querySelector('.popup__close');
@@ -68,9 +77,9 @@
     popupTime.textContent = 'Заезд после ' + cardData.offer.checkin + ', выезд до ' + cardData.offer.checkout;
     popupDescription.textContent = cardData.offer.description;
     popupAvatar.src = cardData.author.avatar;
-    popupType.textContent = getHousingType(cardData);
-    fillFeatureList(cardData, popupFeatures);
-    fillPhotosList(cardData, popupPhotos, popupPhotosImg);
+    popupType.textContent = getHousingType(cardData.offer.type);
+    fillFeatureList(cardData.offer.features, popupFeatures);
+    fillPhotosList(cardData.offer.photos, popupPhotos);
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });
