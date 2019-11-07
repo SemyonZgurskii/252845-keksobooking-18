@@ -2,6 +2,10 @@
 
 (function () {
 
+  var Price = {
+    LOW: 10000,
+    HIGH: 50000,
+  };
   var PINS_QUANTITY = 5;
   var container = document.querySelector('.map__filters');
   var controlsList = container.querySelectorAll('.map__filter');
@@ -22,6 +26,17 @@
     return true;
   };
 
+  var checkPrice = function (priceData) {
+    if (housingPrice.value === 'middle') {
+      return priceData > Price.LOW && priceData < Price.HIGH;
+    } else if (housingPrice.value === 'low') {
+      return priceData <= Price.LOW;
+    } else if (housingPrice.value === 'high') {
+      return priceData >= Price.HIGH;
+    }
+    return true;
+  };
+
   var getProcessedData = function (loadedData) {
     var selectedFeatures = checkboxesArr.filter(function (it) {
       return it.checked === true;
@@ -31,40 +46,32 @@
       });
 
     var processedData = loadedData.filter(function (it) {
-      return it.offer.type === housingType.value || housingType.value === 'any';
-    })
-      .filter(function (it) {
-        return it.offer.rooms === Number(housingRooms.value) || housingRooms.value === 'any';
-      })
-      .filter(function (it) {
-        return it.offer.guests === Number(housingGuests.value) || housingGuests.value === 'any';
-      })
-      .filter(function (it) {
-        return compareFeatures(it.offer.features, selectedFeatures);
-      })
-      .filter(function (it) {
-        if (housingPrice.value === 'middle') {
-          return it.offer.price > 10000 && it.offer.price < 50000;
-        } else if (housingPrice.value === 'low') {
-          return it.offer.price <= 10000;
-        } else if (housingPrice.value === 'high') {
-          return it.offer.price >= 50000;
-        }
-        return true;
-      });
-
+      return it.offer.type === housingType.value || housingType.value === 'any'
+        && it.offer.rooms === Number(housingRooms.value) || housingRooms.value === 'any'
+        && it.offer.guests === Number(housingGuests.value) || housingGuests.value === 'any'
+        && compareFeatures(it.offer.features, selectedFeatures)
+        && checkPrice(it.offer.price);
+    });
 
     return processedData.slice(0, PINS_QUANTITY);
   };
 
+  var valueChange = window.debounce(function () {
+    window.pin.removeActiveItems();
+    window.pin.getRenderedItems(window.pin.originalData);
+  });
+
   var onValueChange = function (control) {
     control.addEventListener('change', function () {
-      window.pin.removeActiveItems();
-      window.pin.getRenderedItems(window.pin.originalData);
+      valueChange();
     });
   };
 
   controlsList.forEach(function (it) {
+    onValueChange(it);
+  });
+
+  checkboxes.forEach(function (it) {
     onValueChange(it);
   });
 
