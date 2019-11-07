@@ -17,9 +17,21 @@
   var checkboxes = checkboxesContainer.querySelectorAll('.map__checkbox');
   var checkboxesArr = Array.from(checkboxes);
 
-  var compareFeatures = function (dataFeatures, selectedFeatures) {
+  var checkType = function (typeData) {
+    return typeData === housingType.value || housingType.value === 'any';
+  };
+
+  var checkRooms = function (roomsData) {
+    return roomsData === Number(housingRooms.value) || housingRooms.value === 'any';
+  };
+
+  var checkGuests = function (guestsData) {
+    return guestsData === Number(housingGuests.value) || housingGuests.value === 'any';
+  };
+
+  var checkFeatures = function (featuresData, selectedFeatures) {
     for (var i = 0; i < selectedFeatures.length; i++) {
-      if (dataFeatures.indexOf(selectedFeatures[i]) < 0) {
+      if (featuresData.indexOf(selectedFeatures[i]) < 0) {
         return false;
       }
     }
@@ -46,26 +58,26 @@
       });
 
     var processedData = loadedData.filter(function (it) {
-      return it.offer.type === housingType.value || housingType.value === 'any'
-        && it.offer.rooms === Number(housingRooms.value) || housingRooms.value === 'any'
-        && it.offer.guests === Number(housingGuests.value) || housingGuests.value === 'any'
-        && compareFeatures(it.offer.features, selectedFeatures)
+      return checkType(it.offer.type)
+        && checkRooms(it.offer.rooms)
+        && checkGuests(it.offer.guests)
+        && checkFeatures(it.offer.features, selectedFeatures)
         && checkPrice(it.offer.price);
     });
 
     return processedData.slice(0, PINS_QUANTITY);
   };
 
-  var valueChange = window.debounce(function () {
-    window.pin.removeActiveItems();
-    window.pin.getRenderedItems(window.pin.originalData);
-  });
-
   var onValueChange = function (control) {
     control.addEventListener('change', function () {
       valueChange();
     });
   };
+
+  var valueChange = window.debounce(function () {
+    window.pin.removeActiveItems();
+    window.pin.getRenderedItems(window.pin.originalData);
+  });
 
   controlsList.forEach(function (it) {
     onValueChange(it);
