@@ -77,6 +77,7 @@
   };
 
   var valueChange = window.debounce(function () {
+    window.modal.deletePopup();
     window.pin.removeActiveItems();
     window.pin.getRenderedItems(window.pin.originalData);
   });
