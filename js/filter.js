@@ -39,36 +39,41 @@
   };
 
   var checkPrice = function (priceData) {
-    if (housingPrice.value === 'middle') {
-      return priceData > Price.LOW && priceData < Price.HIGH;
-    } else if (housingPrice.value === 'low') {
-      return priceData <= Price.LOW;
-    } else if (housingPrice.value === 'high') {
-      return priceData >= Price.HIGH;
+    switch (housingPrice.value) {
+      case ('middle'):
+        return priceData > Price.LOW && priceData < Price.HIGH;
+      case ('low'):
+        return priceData <= Price.LOW;
+      case ('high'):
+        return priceData >= Price.HIGH;
+      default:
+        return true;
     }
-    return true;
   };
 
-  var getProcessedData = function (loadedData) {
-    var selectedFeatures = checkboxesArr.filter(function (it) {
+  var getSelectedFeatures = function (inputCollection) {
+    var selectedFeatures = inputCollection.filter(function (it) {
       return it.checked === true;
     })
       .map(function (it) {
         return it.value;
       });
+    return selectedFeatures;
+  };
 
+  var getProcessedData = function (loadedData) {
     var processedData = loadedData.filter(function (it) {
       return checkType(it.offer.type)
         && checkRooms(it.offer.rooms)
         && checkGuests(it.offer.guests)
-        && checkFeatures(it.offer.features, selectedFeatures)
+        && checkFeatures(it.offer.features, getSelectedFeatures(checkboxesArr))
         && checkPrice(it.offer.price);
     });
 
     return processedData.slice(0, PINS_QUANTITY);
   };
 
-  var onValueChange = function (control) {
+  var addChangeListener = function (control) {
     control.addEventListener('change', function () {
       valueChange();
     });
@@ -80,11 +85,11 @@
   });
 
   controlsList.forEach(function (it) {
-    onValueChange(it);
+    addChangeListener(it);
   });
 
   checkboxes.forEach(function (it) {
-    onValueChange(it);
+    addChangeListener(it);
   });
 
   window.filter = {
