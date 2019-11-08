@@ -31,7 +31,7 @@
 
   var checkFeatures = function (featuresData, selectedFeatures) {
     for (var i = 0; i < selectedFeatures.length; i++) {
-      if (featuresData.indexOf(selectedFeatures[i]) < 0) {
+      if (featuresData.indexOf(selectedFeatures[i].value) < 0) {
         return false;
       }
     }
@@ -54,10 +54,7 @@
   var getSelectedFeatures = function (inputCollection) {
     var selectedFeatures = inputCollection.filter(function (it) {
       return it.checked === true;
-    })
-      .map(function (it) {
-        return it.value;
-      });
+    });
     return selectedFeatures;
   };
 
