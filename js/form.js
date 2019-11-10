@@ -18,7 +18,8 @@
     .querySelector('.ad-form-header__preview')
     .querySelector('img');
   var housePhotoLoader = adBlank.querySelector('#images');
-  var housePhotoPreview = adBlank.querySelector('.ad-form__photo');
+  var housePhotoContainer = adBlank.querySelector('.ad-form__photo-container');
+  var housePhotoPreview = housePhotoContainer.querySelector('.ad-form__photo');
 
   var validateGuests = function (rooms, guests) {
     var roomsNumber = rooms.value;
@@ -142,11 +143,16 @@
   };
 
   var addHousePhoto = function (photo) {
-    var addedPhoto = housePhotoPreview.cloneNode(true);
-    addedPhoto.removeAttribute('id');
-    addedPhoto.style.backgroundImage = 'url(' + photo + ')';
-    addedPhoto.style.backgroundSize = 'cover';
-    housePhotoPreview.parentNode.appendChild(addedPhoto);
+    if (housePhotoContainer.querySelector('.added-photo')) {
+      var addedPhoto = housePhotoPreview.cloneNode(true);
+      addedPhoto.style.backgroundImage = 'url(' + photo + ')';
+      addedPhoto.style.backgroundSize = 'cover';
+      housePhotoContainer.appendChild(addedPhoto);
+    } else {
+      housePhotoPreview.style.backgroundImage = 'url(' + photo + ')';
+      housePhotoPreview.style.backgroundSize = 'cover';
+      housePhotoPreview.classList.add('added-photo');
+    }
   };
 
   var addAvatarPhoto = function (photo) {
