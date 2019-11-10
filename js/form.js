@@ -2,6 +2,7 @@
 
 (function () {
 
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var adBlank = document.querySelector('.ad-form');
   var pageFieldsets = document.querySelectorAll('fieldset');
   var titleField = adBlank.querySelector('#title');
@@ -12,6 +13,12 @@
   var roomsSelect = document.querySelector('#room_number');
   var guestsQuantitySelect = document.querySelector('#capacity');
   var submit = document.querySelector('.ad-form__submit');
+  var avatarLoader = adBlank.querySelector('#avatar');
+  var avatarPreview = adBlank
+    .querySelector('.ad-form-header__preview')
+    .querySelector('img');
+  var housePhotoLoader = adBlank.querySelector('#images');
+  var housePhotoPreview = adBlank.querySelector('.ad-form__photo');
 
   var validateGuests = function (rooms, guests) {
     var roomsNumber = rooms.value;
@@ -112,6 +119,40 @@
     evt.preventDefault();
   };
 
+  var setLoadedPicture = function (filechooser, containerCb) {
+    var file = filechooser.files[0];
+
+    if (file) {
+      var fileName = file.name.toLowerCase();
+
+      var matches = FILE_TYPES.some(function (it) {
+        return fileName.endsWith(it);
+      });
+
+      if (matches) {
+        var reader = new FileReader();
+
+        reader.addEventListener('load', function () {
+          containerCb(reader.result);
+        });
+
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+
+  var addHousePhoto = function (photo) {
+    var addedPhoto = housePhotoPreview.cloneNode(true);
+    addedPhoto.removeAttribute('id');
+    addedPhoto.style.backgroundImage = 'url(' + photo + ')';
+    addedPhoto.style.backgroundSize = 'cover';
+    housePhotoPreview.parentNode.appendChild(addedPhoto);
+  };
+
+  var addAvatarPhoto = function (photo) {
+    avatarPreview.src = photo;
+  };
+
   var toggleFieldsets = function (isDisabled) {
     pageFieldsets.forEach(function (fieldset) {
       fieldset.disabled = isDisabled;
@@ -153,6 +194,14 @@
   setMinPrice(typeField, priceField);
 
   adBlank.addEventListener('submit', onAdBlankSubmit);
+
+  avatarLoader.addEventListener('change', function () {
+    setLoadedPicture(avatarLoader, addAvatarPhoto);
+  });
+
+  housePhotoLoader.addEventListener('change', function () {
+    setLoadedPicture(housePhotoLoader, addHousePhoto);
+  });
 
   window.form = {
     adBlank: adBlank,
