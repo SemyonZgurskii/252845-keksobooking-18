@@ -3,6 +3,7 @@
 (function () {
 
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var AVATAR_DEFAULT_PICTURE = 'img/muffin-grey.svg';
   var adBlank = document.querySelector('.ad-form');
   var pageFieldsets = document.querySelectorAll('fieldset');
   var titleField = adBlank.querySelector('#title');
@@ -20,6 +21,7 @@
   var housePhotoLoader = adBlank.querySelector('#images');
   var housePhotoContainer = adBlank.querySelector('.ad-form__photo-container');
   var housePhotoPreview = housePhotoContainer.querySelector('.ad-form__photo');
+  var housePhotoBlank = document.createDocumentFragment();
 
   var validateGuests = function (rooms, guests) {
     var roomsNumber = rooms.value;
@@ -106,7 +108,7 @@
   };
 
   var onDataLoad = function () {
-    adBlank.reset();
+    resetAll();
     window.modal.deletePopup();
     window.modal.map.classList.add('map--faded');
     window.form.adBlank.classList.add('ad-form--disabled');
@@ -142,21 +144,38 @@
     }
   };
 
+  var setElementBackground = function (element, image) {
+    element.style.backgroundImage = 'url(' + image + ')';
+    element.style.backgroundSize = 'cover';
+  };
+
   var addHousePhoto = function (photo) {
-    if (housePhotoContainer.querySelector('.added-photo')) {
-      var addedPhoto = housePhotoPreview.cloneNode(true);
-      addedPhoto.style.backgroundImage = 'url(' + photo + ')';
-      addedPhoto.style.backgroundSize = 'cover';
-      housePhotoContainer.appendChild(addedPhoto);
-    } else {
-      housePhotoPreview.style.backgroundImage = 'url(' + photo + ')';
-      housePhotoPreview.style.backgroundSize = 'cover';
-      housePhotoPreview.classList.add('added-photo');
-    }
+    var addedPhoto = housePhotoPreview.cloneNode(true);
+    housePhotoBlank.appendChild(housePhotoPreview);
+    setElementBackground(addedPhoto, photo);
+    housePhotoContainer.appendChild(addedPhoto);
+  };
+
+  var removeHousePhotos = function () {
+    var photosList = housePhotoContainer.querySelectorAll('.ad-form__photo');
+    photosList.forEach(function (photoElement) {
+      housePhotoContainer.removeChild(photoElement);
+    });
+    housePhotoContainer.appendChild(housePhotoBlank);
   };
 
   var addAvatarPhoto = function (photo) {
     avatarPreview.src = photo;
+  };
+
+  var removeAvatarPhoto = function () {
+    avatarPreview.src = AVATAR_DEFAULT_PICTURE;
+  };
+
+  var resetAll = function () {
+    adBlank.reset();
+    removeAvatarPhoto();
+    removeHousePhotos();
   };
 
   var toggleFieldsets = function (isDisabled) {
