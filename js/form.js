@@ -7,6 +7,7 @@
   var adBlank = document.querySelector('.ad-form');
   var pageFieldsets = document.querySelectorAll('fieldset');
   var pageCheckboxes = document.querySelectorAll('[type="checkbox"]');
+  var addressInput = document.querySelector('#address');
   var titleField = adBlank.querySelector('#title');
   var typeField = adBlank.querySelector('#type');
   var priceField = adBlank.querySelector('#price');
@@ -205,6 +206,10 @@
     });
   };
 
+  var fillCordinationsInput = function (locationX, locationY) {
+    addressInput.value = locationX + ', ' + locationY;
+  };
+
   toggleFieldsets(true);
 
   typeField.addEventListener('change', function () {
@@ -255,6 +260,7 @@
     adBlank: adBlank,
     pageFieldsets: pageFieldsets,
     toggleFieldsets: toggleFieldsets,
+    fillCordinationsInput: fillCordinationsInput,
   };
 
 })();

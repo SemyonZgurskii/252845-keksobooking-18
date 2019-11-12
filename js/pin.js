@@ -2,6 +2,7 @@
 
 (function () {
 
+  var POINTER_HEIGHT = 16;
   var isMapActive = false;
   var container = document.querySelector('.map__pins');
   var mainItem = container.querySelector('.map__pin--main');
@@ -11,7 +12,6 @@
       .content
     .querySelector('.map__pin');
   var fragment = document.createDocumentFragment();
-  var addressInput = document.querySelector('#address');
 
   var createItem = function (cardData) {
     var item = template.cloneNode(true);
@@ -69,15 +69,29 @@
     mainItem.addEventListener('click', setPoint);
   };
 
-  addressInput.value = Math.round((mainItem.offsetLeft + mainItem.offsetWidth / 2)) + ', ' + Math.round(mainItem.offsetTop + mainItem.offsetHeight / 2);
+  var getLocationX = function () {
+    return Math.round((mainItem.offsetLeft + mainItem.offsetWidth / 2));
+  };
+
+  var getDefaultLocationY = function () {
+    return Math.round(mainItem.offsetTop + mainItem.offsetHeight / 2);
+  };
+
+  var getLocationY = function () {
+    return Math.round((mainItem.offsetTop + mainItem.offsetHeight + POINTER_HEIGHT));
+  };
+
+  window.form.fillCordinationsInput(getLocationX(), getDefaultLocationY());
   mainItem.addEventListener('mousedown', setPoint);
-  window.handler.drag(mainItem, addressInput);
+  window.handler.drag(mainItem, getLocationX, getLocationY, window.form.fillCordinationsInput);
 
   window.pin = {
     getRenderedItems: getRenderedItems,
+    mainItem: mainItem,
     container: container,
     dropToDefaultSettings: dropToDefaultSettings,
     removeActiveItems: removeActiveItems,
+    POINTER_HEIGHT: POINTER_HEIGHT,
   };
 
 })();

@@ -5,9 +5,8 @@
   var MAX_Y = 630;
   var MIN_X = 0;
   var MAX_X = 1200;
-  var POINTER_HEIGHT = 16;
 
-  var drag = function (item, fieldToFill) {
+  var drag = function (item, x, y, inputFiller) {
     item.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
@@ -17,18 +16,6 @@
       };
 
       var dragged = false;
-
-      var getLocationX = function () {
-        return Math.round((item.offsetLeft + item.offsetWidth / 2));
-      };
-
-      var getLocationY = function () {
-        return Math.round((item.offsetTop + item.offsetHeight + POINTER_HEIGHT));
-      };
-
-      var calculateLocation = function () {
-        return getLocationX() + ', ' + getLocationY();
-      };
 
       var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
@@ -47,24 +34,21 @@
         item.style.top = (item.offsetTop - shift.y) + 'px';
         item.style.left = (item.offsetLeft - shift.x) + 'px';
 
-        var locationX = getLocationX();
-        var locationY = getLocationY();
-
-        if (locationY < MIN_Y || locationY > MAX_Y) {
+        if (y() < MIN_Y || y() > MAX_Y) {
           item.style.top = (item.offsetTop + shift.y) + 'px';
         }
 
-        if (locationX < MIN_X || locationX > MAX_X) {
+        if (x() < MIN_X || x() > MAX_X) {
           item.style.left = (item.offsetLeft + shift.x) + 'px';
         }
 
-        fieldToFill.value = calculateLocation();
+        inputFiller(x(), y());
       };
 
       var onMouseUp = function (upEvt) {
         upEvt.preventDefault();
 
-        fieldToFill.value = calculateLocation();
+        inputFiller(x(), y());
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
 
