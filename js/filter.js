@@ -7,6 +7,7 @@
     HIGH: 50000,
   };
   var PINS_QUANTITY = 5;
+  var DEFUALT_SELECT_VALUE = 'any';
   var container = document.querySelector('.map__filters');
   var controlsList = container.querySelectorAll('.map__filter');
   var housingType = container.querySelector('#housing-type');
@@ -17,16 +18,24 @@
   var checkboxes = checkboxesContainer.querySelectorAll('.map__checkbox');
   var checkboxesArr = Array.from(checkboxes);
 
+  var toggleControls = function (isDisabled) {
+    controlsList.forEach(function (control) {
+      control.disabled = isDisabled;
+    });
+  };
+
+  toggleControls(true);
+
   var checkType = function (typeData) {
-    return typeData === housingType.value || housingType.value === 'any';
+    return typeData === housingType.value || housingType.value === DEFUALT_SELECT_VALUE;
   };
 
   var checkRooms = function (roomsData) {
-    return roomsData === Number(housingRooms.value) || housingRooms.value === 'any';
+    return roomsData === Number(housingRooms.value) || housingRooms.value === DEFUALT_SELECT_VALUE;
   };
 
   var checkGuests = function (guestsData) {
-    return guestsData === Number(housingGuests.value) || housingGuests.value === 'any';
+    return guestsData === Number(housingGuests.value) || housingGuests.value === DEFUALT_SELECT_VALUE;
   };
 
   var checkFeatures = function (featuresData, selectedFeatures) {
@@ -92,6 +101,9 @@
 
   window.filter = {
     getProcessedData: getProcessedData,
+    toggleControls: toggleControls,
+    controlsList: controlsList,
+    DEFUALT_SELECT_VALUE: DEFUALT_SELECT_VALUE,
   };
 
 })();

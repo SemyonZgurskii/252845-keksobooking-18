@@ -41,6 +41,7 @@
     window.form.adBlank.classList.remove('ad-form--disabled');
     window.backend.transferData('GET', window.backend.GET_URL, window.pin.getRenderedItems, onError);
     window.form.toggleFieldsets(false);
+    window.filter.toggleControls(false);
   };
 
   window.map = {

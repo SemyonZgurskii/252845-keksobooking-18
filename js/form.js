@@ -6,6 +6,7 @@
   var AVATAR_DEFAULT_PICTURE = 'img/muffin-grey.svg';
   var adBlank = document.querySelector('.ad-form');
   var pageFieldsets = document.querySelectorAll('fieldset');
+  var pageCheckboxes = document.querySelectorAll('[type="checkbox"]');
   var titleField = adBlank.querySelector('#title');
   var typeField = adBlank.querySelector('#type');
   var priceField = adBlank.querySelector('#price');
@@ -13,7 +14,8 @@
   var timeOutField = adBlank.querySelector('#timeout');
   var roomsSelect = document.querySelector('#room_number');
   var guestsQuantitySelect = document.querySelector('#capacity');
-  var submit = document.querySelector('.ad-form__submit');
+  var submitButton = document.querySelector('.ad-form__submit');
+  var resetButton = adBlank.querySelector('.ad-form__reset');
   var avatarLoader = adBlank.querySelector('#avatar');
   var avatarPreview = adBlank
     .querySelector('.ad-form-header__preview')
@@ -107,13 +109,32 @@
     document.addEventListener('click', onWindowClick);
   };
 
-  var onDataLoad = function () {
+  var setFilterDefaultValue = function () {
+    window.filter.controlsList.forEach(function (control) {
+      control.value = window.filter.DEFUALT_SELECT_VALUE;
+    });
+  };
+
+  var uncheckCheckboxes = function () {
+    pageCheckboxes.forEach(function (checkbox) {
+      checkbox.checked = false;
+    });
+  };
+
+  var clearPage = function () {
     resetAll();
+    setFilterDefaultValue();
+    uncheckCheckboxes();
     window.modal.deletePopup();
+    window.pin.dropToDefaultSettings();
+  };
+
+  var onDataLoad = function () {
+    clearPage();
     window.modal.map.classList.add('map--faded');
     window.form.adBlank.classList.add('ad-form--disabled');
-    window.pin.dropToDefaultSettings();
-    toggleFieldsets(false);
+    window.filter.toggleControls(true);
+    toggleFieldsets(true);
     showSuccessMessage();
   };
 
@@ -212,9 +233,11 @@
     validatePrice();
   });
 
-  submit.addEventListener('click', function () {
+  submitButton.addEventListener('click', function () {
     validateGuests(roomsSelect, guestsQuantitySelect);
   });
+
+  resetButton.addEventListener('click', clearPage);
 
   setMinPrice(typeField, priceField);
 

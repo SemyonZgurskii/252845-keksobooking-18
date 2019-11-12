@@ -69,6 +69,7 @@
     mainItem.addEventListener('click', setPoint);
   };
 
+  addressInput.value = Math.round((mainItem.offsetLeft + mainItem.offsetWidth / 2)) + ', ' + Math.round(mainItem.offsetTop + mainItem.offsetHeight / 2);
   mainItem.addEventListener('mousedown', setPoint);
   window.handler.drag(mainItem, addressInput);
 
