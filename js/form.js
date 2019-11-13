@@ -127,7 +127,7 @@
     setFilterDefaultValue();
     uncheckCheckboxes();
     window.modal.deletePopup();
-    window.pin.dropToDefaultSettings();
+    window.handler.dropToDefaultSettings();
   };
 
   var onDataLoad = function () {

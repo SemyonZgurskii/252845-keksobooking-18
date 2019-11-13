@@ -2,12 +2,7 @@
 
 (function () {
 
-  var POINTER_HEIGHT = 16;
-  var isMapActive = false;
   var container = document.querySelector('.map__pins');
-  var mainItem = container.querySelector('.map__pin--main');
-  var defaultX = mainItem.offsetLeft;
-  var defaultY = mainItem.offsetTop;
   var template = document.querySelector('#pin')
       .content
     .querySelector('.map__pin');
@@ -41,19 +36,6 @@
     container.appendChild(fragment);
   };
 
-
-  var setPoint = function () {
-    if (!isMapActive) {
-      window.map.activatePage();
-      isMapActive = true;
-    }
-  };
-
-  var setDefaultPosition = function () {
-    mainItem.style.left = defaultX + 'px';
-    mainItem.style.top = defaultY + 'px';
-  };
-
   var removeActiveItems = function () {
     var activeItems = container.querySelectorAll('.map__pin--user');
     activeItems.forEach(function (item) {
@@ -61,37 +43,10 @@
     });
   };
 
-  var dropToDefaultSettings = function () {
-    removeActiveItems();
-    setDefaultPosition();
-    isMapActive = false;
-    mainItem.removeEventListener('click', setPoint);
-    mainItem.addEventListener('click', setPoint);
-  };
-
-  var getLocationX = function () {
-    return Math.round((mainItem.offsetLeft + mainItem.offsetWidth / 2));
-  };
-
-  var getDefaultLocationY = function () {
-    return Math.round(mainItem.offsetTop + mainItem.offsetHeight / 2);
-  };
-
-  var getLocationY = function () {
-    return Math.round((mainItem.offsetTop + mainItem.offsetHeight + POINTER_HEIGHT));
-  };
-
-  window.form.fillCordinationsInput(getLocationX(), getDefaultLocationY());
-  mainItem.addEventListener('mousedown', setPoint);
-  window.handler.drag(mainItem, getLocationX, getLocationY, window.form.fillCordinationsInput);
-
   window.pin = {
     getRenderedItems: getRenderedItems,
-    mainItem: mainItem,
     container: container,
-    dropToDefaultSettings: dropToDefaultSettings,
     removeActiveItems: removeActiveItems,
-    POINTER_HEIGHT: POINTER_HEIGHT,
   };
 
 })();
