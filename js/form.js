@@ -95,7 +95,7 @@
     window.modal.map.appendChild(successWindow);
 
     var onWindowEsc = function (evt) {
-      if (evt.keyCode === 27) {
+      if (evt.keyCode === window.modal.ESC_KEYCODE) {
         successWindow.parentNode.removeChild(successWindow);
         document.removeEventListener('keydown', onWindowEsc);
       }
@@ -127,7 +127,7 @@
     setFilterDefaultValue();
     uncheckCheckboxes();
     window.modal.deletePopup();
-    window.handler.dropToDefaultSettings();
+    window.mainPin.dropToDefaultSettings();
   };
 
   var onDataLoad = function () {
@@ -206,7 +206,7 @@
     });
   };
 
-  var fillCordinationsInput = function (locationX, locationY) {
+  var setAddress = function (locationX, locationY) {
     addressInput.value = locationX + ', ' + locationY;
   };
 
@@ -260,7 +260,7 @@
     adBlank: adBlank,
     pageFieldsets: pageFieldsets,
     toggleFieldsets: toggleFieldsets,
-    fillCordinationsInput: fillCordinationsInput,
+    setAddress: setAddress,
   };
 
 })();

@@ -2,6 +2,10 @@
 
 (function () {
 
+  var ESC_KEYCODE = 27;
+  var IMG_BLANK_HEIGHT = '40';
+  var IMG_BLANK_WIDTH = '45';
+
   var popup;
   var map = document.querySelector('.map');
   var cardPopup = document.querySelector('#card')
@@ -23,8 +27,8 @@
   var addPhotosElement = function (photoSrc, parentElement) {
     var imgElement = document.createElement('img');
     imgElement.classList.add('popup__photo');
-    imgElement.width = '45';
-    imgElement.height = '40';
+    imgElement.width = IMG_BLANK_WIDTH;
+    imgElement.height = IMG_BLANK_HEIGHT;
     imgElement.alt = 'Фотография жилья';
     imgElement.src = photoSrc;
 
@@ -97,7 +101,7 @@
   };
 
   var onEscPress = function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === ESC_KEYCODE) {
       deletePopup();
     }
   };
@@ -106,6 +110,7 @@
     renderCardPopup: renderCardPopup,
     map: map,
     deletePopup: deletePopup,
+    ESC_KEYCODE: ESC_KEYCODE,
   };
 
 })();

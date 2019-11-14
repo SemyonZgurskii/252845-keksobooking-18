@@ -2,10 +2,8 @@
 
 (function () {
 
-  var Price = {
-    LOW: 10000,
-    HIGH: 50000,
-  };
+  var LOW_PRICE = 10000;
+  var HIGH_PRICE = 50000;
   var PINS_QUANTITY = 5;
   var DEFUALT_SELECT_VALUE = 'any';
   var container = document.querySelector('.map__filters');
@@ -50,11 +48,11 @@
   var checkPrice = function (priceData) {
     switch (housingPrice.value) {
       case ('middle'):
-        return priceData > Price.LOW && priceData < Price.HIGH;
+        return priceData > LOW_PRICE && priceData < HIGH_PRICE;
       case ('low'):
-        return priceData <= Price.LOW;
+        return priceData <= LOW_PRICE;
       case ('high'):
-        return priceData >= Price.HIGH;
+        return priceData >= HIGH_PRICE;
       default:
         return true;
     }

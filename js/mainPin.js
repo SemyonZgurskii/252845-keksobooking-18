@@ -12,6 +12,7 @@
   var defaultY = mainItem.offsetTop;
 
   var setDefaultPosition = function () {
+    window.modal.map.classList.add('map--faded');
     mainItem.style.left = defaultX + 'px';
     mainItem.style.top = defaultY + 'px';
   };
@@ -54,7 +55,7 @@
 
       var dragged = false;
 
-      var onMouseMove = function (moveEvt) {
+      var onMainItemMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
         dragged = true;
 
@@ -79,15 +80,15 @@
           mainItem.style.left = (mainItem.offsetLeft + shift.x) + 'px';
         }
 
-        window.form.fillCordinationsInput(getLocationX(), getLocationY());
+        window.form.setAddress(getLocationX(), getLocationY());
       };
 
-      var onMouseUp = function (upEvt) {
+      var onMainItemMouseUp = function (upEvt) {
         upEvt.preventDefault();
 
-        window.form.fillCordinationsInput(getLocationX(), getLocationY());
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
+        window.form.setAddress(getLocationX(), getLocationY());
+        document.removeEventListener('mousemove', onMainItemMouseMove);
+        document.removeEventListener('mouseup', onMainItemMouseUp);
 
         if (dragged) {
           var onClickPreventDefault = function (dragEvt) {
@@ -98,16 +99,16 @@
         }
       };
 
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
+      document.addEventListener('mousemove', onMainItemMouseMove);
+      document.addEventListener('mouseup', onMainItemMouseUp);
     });
   };
 
   drag();
   mainItem.addEventListener('mousedown', setPoint);
-  window.form.fillCordinationsInput(getLocationX(), getDefaultLocationY());
+  window.form.setAddress(getLocationX(), getDefaultLocationY());
 
-  window.handler = {
+  window.mainPin = {
     dropToDefaultSettings: dropToDefaultSettings,
   };
 
