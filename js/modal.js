@@ -3,8 +3,8 @@
 (function () {
 
   var ESC_KEYCODE = 27;
-  var IMG_BLANK_HEIGHT = '40';
-  var IMG_BLANK_WIDTH = '45';
+  var IMAGE_BLANK_HEIGHT = '40';
+  var IMAGE_BLANK_WIDTH = '45';
 
   var popup;
   var map = document.querySelector('.map');
@@ -25,14 +25,14 @@
   };
 
   var addPhotosElement = function (photoSrc, parentElement) {
-    var imgElement = document.createElement('img');
-    imgElement.classList.add('popup__photo');
-    imgElement.width = IMG_BLANK_WIDTH;
-    imgElement.height = IMG_BLANK_HEIGHT;
-    imgElement.alt = 'Фотография жилья';
-    imgElement.src = photoSrc;
+    var imageItem = document.createElement('img');
+    imageItem.classList.add('popup__photo');
+    imageItem.width = IMAGE_BLANK_WIDTH;
+    imageItem.height = IMAGE_BLANK_HEIGHT;
+    imageItem.alt = 'Фотография жилья';
+    imageItem.src = photoSrc;
 
-    parentElement.appendChild(imgElement);
+    parentElement.appendChild(imageItem);
   };
 
   var fillPhotosList = function (photosArr, parentElement) {
@@ -87,7 +87,7 @@
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });
-    document.addEventListener('keydown', onEscPress);
+    document.addEventListener('keydown', onDocumentEscPress);
 
     return popup;
   };
@@ -96,11 +96,11 @@
     if (popup) {
       popup.parentNode.removeChild(popup);
       popup = null;
-      document.removeEventListener('keydown', onEscPress);
+      document.removeEventListener('keydown', onDocumentEscPress);
     }
   };
 
-  var onEscPress = function (evt) {
+  var onDocumentEscPress = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       deletePopup();
     }

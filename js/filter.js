@@ -37,12 +37,9 @@
   };
 
   var checkFeatures = function (featuresData, selectedFeatures) {
-    for (var i = 0; i < selectedFeatures.length; i++) {
-      if (featuresData.indexOf(selectedFeatures[i].value) < 0) {
-        return false;
-      }
-    }
-    return true;
+    return selectedFeatures.every(function (feature) {
+      return featuresData.indexOf(feature.value) >= 0;
+    });
   };
 
   var checkPrice = function (priceData) {

@@ -21,11 +21,11 @@
     window.pin.removeActiveItems();
     setDefaultPosition();
     isMapActive = false;
-    mainItem.removeEventListener('click', setPoint);
-    mainItem.addEventListener('click', setPoint);
+    mainItem.removeEventListener('mousedown', onMainItemMouseDown);
+    mainItem.addEventListener('mousedown', onMainItemMouseDown);
   };
 
-  var setPoint = function () {
+  var onMainItemMouseDown = function () {
     if (!isMapActive) {
       window.map.activatePage();
       isMapActive = true;
@@ -55,7 +55,7 @@
 
       var dragged = false;
 
-      var onMainItemMouseMove = function (moveEvt) {
+      var onDocumentMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
         dragged = true;
 
@@ -83,12 +83,12 @@
         window.form.setAddress(getLocationX(), getLocationY());
       };
 
-      var onMainItemMouseUp = function (upEvt) {
+      var onDocumentMouseUp = function (upEvt) {
         upEvt.preventDefault();
 
         window.form.setAddress(getLocationX(), getLocationY());
-        document.removeEventListener('mousemove', onMainItemMouseMove);
-        document.removeEventListener('mouseup', onMainItemMouseUp);
+        document.removeEventListener('mousemove', onDocumentMouseMove);
+        document.removeEventListener('mouseup', onDocumentMouseUp);
 
         if (dragged) {
           var onClickPreventDefault = function (dragEvt) {
@@ -99,13 +99,13 @@
         }
       };
 
-      document.addEventListener('mousemove', onMainItemMouseMove);
-      document.addEventListener('mouseup', onMainItemMouseUp);
+      document.addEventListener('mousemove', onDocumentMouseMove);
+      document.addEventListener('mouseup', onDocumentMouseUp);
     });
   };
 
   drag();
-  mainItem.addEventListener('mousedown', setPoint);
+  mainItem.addEventListener('mousedown', onMainItemMouseDown);
   window.form.setAddress(getLocationX(), getDefaultLocationY());
 
   window.mainPin = {

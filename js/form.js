@@ -94,20 +94,20 @@
     var successWindow = successWindowTemplate.cloneNode(true);
     window.modal.map.appendChild(successWindow);
 
-    var onWindowEsc = function (evt) {
+    var onDocumentEsc = function (evt) {
       if (evt.keyCode === window.modal.ESC_KEYCODE) {
         successWindow.parentNode.removeChild(successWindow);
-        document.removeEventListener('keydown', onWindowEsc);
+        document.removeEventListener('keydown', onDocumentEsc);
       }
     };
 
-    var onWindowClick = function () {
+    var onDocumentClick = function () {
       successWindow.parentNode.removeChild(successWindow);
-      document.removeEventListener('click', onWindowClick);
+      document.removeEventListener('click', onDocumentClick);
     };
 
-    document.addEventListener('keydown', onWindowEsc);
-    document.addEventListener('click', onWindowClick);
+    document.addEventListener('keydown', onDocumentEsc);
+    document.addEventListener('click', onDocumentClick);
   };
 
   var setFilterDefaultValue = function () {
