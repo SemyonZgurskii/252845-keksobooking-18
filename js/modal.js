@@ -2,6 +2,10 @@
 
 (function () {
 
+  var ESC_KEYCODE = 27;
+  var IMAGE_BLANK_HEIGHT = '40';
+  var IMAGE_BLANK_WIDTH = '45';
+
   var popup;
   var map = document.querySelector('.map');
   var cardPopup = document.querySelector('#card')
@@ -21,14 +25,14 @@
   };
 
   var addPhotosElement = function (photoSrc, parentElement) {
-    var imgElement = document.createElement('img');
-    imgElement.classList.add('popup__photo');
-    imgElement.width = '45';
-    imgElement.height = '40';
-    imgElement.alt = 'Фотография жилья';
-    imgElement.src = photoSrc;
+    var imageItem = document.createElement('img');
+    imageItem.classList.add('popup__photo');
+    imageItem.width = IMAGE_BLANK_WIDTH;
+    imageItem.height = IMAGE_BLANK_HEIGHT;
+    imageItem.alt = 'Фотография жилья';
+    imageItem.src = photoSrc;
 
-    parentElement.appendChild(imgElement);
+    parentElement.appendChild(imageItem);
   };
 
   var fillPhotosList = function (photosArr, parentElement) {
@@ -83,7 +87,7 @@
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });
-    document.addEventListener('keydown', onEscPress);
+    document.addEventListener('keydown', onDocumentKeydown);
 
     return popup;
   };
@@ -92,12 +96,12 @@
     if (popup) {
       popup.parentNode.removeChild(popup);
       popup = null;
-      document.removeEventListener('keydown', onEscPress);
+      document.removeEventListener('keydown', onDocumentKeydown);
     }
   };
 
-  var onEscPress = function (evt) {
-    if (evt.keyCode === 27) {
+  var onDocumentKeydown = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
       deletePopup();
     }
   };
@@ -106,6 +110,7 @@
     renderCardPopup: renderCardPopup,
     map: map,
     deletePopup: deletePopup,
+    ESC_KEYCODE: ESC_KEYCODE,
   };
 
 })();

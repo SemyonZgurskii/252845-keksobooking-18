@@ -2,16 +2,11 @@
 
 (function () {
 
-  var isMapActive = false;
   var container = document.querySelector('.map__pins');
-  var mainItem = container.querySelector('.map__pin--main');
-  var defaultX = mainItem.offsetLeft;
-  var defaultY = mainItem.offsetTop;
   var template = document.querySelector('#pin')
       .content
     .querySelector('.map__pin');
   var fragment = document.createDocumentFragment();
-  var addressInput = document.querySelector('#address');
 
   var createItem = function (cardData) {
     var item = template.cloneNode(true);
@@ -41,19 +36,6 @@
     container.appendChild(fragment);
   };
 
-
-  var setPoint = function () {
-    if (!isMapActive) {
-      window.map.activatePage();
-      isMapActive = true;
-    }
-  };
-
-  var setDefaultPosition = function () {
-    mainItem.style.left = defaultX + 'px';
-    mainItem.style.top = defaultY + 'px';
-  };
-
   var removeActiveItems = function () {
     var activeItems = container.querySelectorAll('.map__pin--user');
     activeItems.forEach(function (item) {
@@ -61,21 +43,9 @@
     });
   };
 
-  var dropToDefaultSettings = function () {
-    removeActiveItems();
-    setDefaultPosition();
-    isMapActive = false;
-    mainItem.removeEventListener('click', setPoint);
-    mainItem.addEventListener('click', setPoint);
-  };
-
-  mainItem.addEventListener('mousedown', setPoint);
-  window.handler.drag(mainItem, addressInput);
-
   window.pin = {
     getRenderedItems: getRenderedItems,
     container: container,
-    dropToDefaultSettings: dropToDefaultSettings,
     removeActiveItems: removeActiveItems,
   };
 

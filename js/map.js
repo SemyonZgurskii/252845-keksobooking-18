@@ -26,7 +26,7 @@
     });
 
     document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === 27) {
+      if (evt.keyCode === window.modal.ESC_KEYCODE) {
         removeErrorWindow();
       }
     });
@@ -41,6 +41,7 @@
     window.form.adBlank.classList.remove('ad-form--disabled');
     window.backend.transferData('GET', window.backend.GET_URL, window.pin.getRenderedItems, onError);
     window.form.toggleFieldsets(false);
+    window.filter.toggleControls(false);
   };
 
   window.map = {
