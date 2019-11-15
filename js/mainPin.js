@@ -91,11 +91,11 @@
         document.removeEventListener('mouseup', onDocumentMouseUp);
 
         if (dragged) {
-          var onClickPreventDefault = function (dragEvt) {
+          var onMainItemClick = function (dragEvt) {
             dragEvt.preventDefault();
-            mainItem.removeEventListener('click', onClickPreventDefault);
+            mainItem.removeEventListener('click', onMainItemClick);
           };
-          mainItem.addEventListener('click', onClickPreventDefault);
+          mainItem.addEventListener('click', onMainItemClick);
         }
       };
 
