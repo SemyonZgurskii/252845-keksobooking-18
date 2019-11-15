@@ -38,7 +38,7 @@
 
   var checkFeatures = function (featuresData, selectedFeatures) {
     return selectedFeatures.every(function (feature) {
-      return featuresData.indexOf(feature.value) >= 0;
+      return featuresData.indexOf(feature.value) > -1;
     });
   };
 

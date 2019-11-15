@@ -94,10 +94,10 @@
     var successWindow = successWindowTemplate.cloneNode(true);
     window.modal.map.appendChild(successWindow);
 
-    var onDocumentEsc = function (evt) {
+    var onDocumentKeydown = function (evt) {
       if (evt.keyCode === window.modal.ESC_KEYCODE) {
         successWindow.parentNode.removeChild(successWindow);
-        document.removeEventListener('keydown', onDocumentEsc);
+        document.removeEventListener('keydown', onDocumentKeydown);
       }
     };
 
@@ -106,7 +106,7 @@
       document.removeEventListener('click', onDocumentClick);
     };
 
-    document.addEventListener('keydown', onDocumentEsc);
+    document.addEventListener('keydown', onDocumentKeydown);
     document.addEventListener('click', onDocumentClick);
   };
 

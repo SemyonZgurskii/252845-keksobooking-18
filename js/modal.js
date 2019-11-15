@@ -87,7 +87,7 @@
     popupCloseButton.addEventListener('click', function () {
       deletePopup();
     });
-    document.addEventListener('keydown', onDocumentEscPress);
+    document.addEventListener('keydown', onDocumentKeydown);
 
     return popup;
   };
@@ -96,11 +96,11 @@
     if (popup) {
       popup.parentNode.removeChild(popup);
       popup = null;
-      document.removeEventListener('keydown', onDocumentEscPress);
+      document.removeEventListener('keydown', onDocumentKeydown);
     }
   };
 
-  var onDocumentEscPress = function (evt) {
+  var onDocumentKeydown = function (evt) {
     if (evt.keyCode === ESC_KEYCODE) {
       deletePopup();
     }
