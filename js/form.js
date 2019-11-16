@@ -242,7 +242,9 @@
     validateGuests(roomsSelect, guestsQuantitySelect);
   });
 
-  resetButton.addEventListener('click', clearPage);
+  resetButton.addEventListener('click', function () {
+    clearPage();
+  });
 
   setMinPrice(typeField, priceField);
 

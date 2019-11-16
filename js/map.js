@@ -14,6 +14,18 @@
 
     var removeErrorWindow = function () {
       pageMainContent.removeChild(errorWindow);
+      document.removeEventListener('keydown', onDocumentKeydown);
+      document.removeEventListener('click', onDocumentClick);
+    };
+
+    var onDocumentKeydown = function (evt) {
+      if (evt.keyCode === window.modal.ESC_KEYCODE) {
+        removeErrorWindow();
+      }
+    };
+
+    var onDocumentClick = function () {
+      removeErrorWindow();
     };
 
     errorTextContainer.textContent = errorMessage;
@@ -25,15 +37,8 @@
       removeErrorWindow();
     });
 
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.modal.ESC_KEYCODE) {
-        removeErrorWindow();
-      }
-    });
-
-    document.addEventListener('click', function () {
-      removeErrorWindow();
-    });
+    document.addEventListener('keydown', onDocumentKeydown);
+    document.addEventListener('click', onDocumentClick);
   };
 
   var activatePage = function () {
