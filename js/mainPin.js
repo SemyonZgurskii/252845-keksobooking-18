@@ -4,7 +4,6 @@
   var MIN_Y = 130;
   var MAX_Y = 630;
   var MIN_X = 0;
-  var MAX_X = 1200;
   var POINTER_HEIGHT = 16;
   var isMapActive = false;
   var mainItem = window.pin.container.querySelector('.map__pin--main');
@@ -76,7 +75,7 @@
           mainItem.style.top = (mainItem.offsetTop + shift.y) + 'px';
         }
 
-        if (getLocationX() < MIN_X || getLocationX() > MAX_X) {
+        if (getLocationX() < MIN_X || getLocationX() > window.modal.map.offsetWidth) {
           mainItem.style.left = (mainItem.offsetLeft + shift.x) + 'px';
         }
 
